@@ -11,7 +11,6 @@
 
 namespace ONGR\XtCommerceConnectorBundle\Source;
 
-use Doctrine\DBAL\Statement;
 use ONGR\ConnectionsBundle\EventListener\AbstractImportSourceEventListener;
 use ONGR\ConnectionsBundle\Pipeline\Event\SourcePipelineEvent;
 use Doctrine\DBAL\Connection;
@@ -19,8 +18,6 @@ use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\XtCommerceBundle\Import\ImportHelper;
 use ONGR\XtCommerceBundle\Import\ImportIterator;
 use ONGR\XtCommerceBundle\Import\ImportSubQuery;
-use ONGR\XtCommerceBundle\Import\ProductImportIterator;
-use PDO;
 
 /**
  * Provides all sources for import.
@@ -145,6 +142,17 @@ class ImportSource extends AbstractImportSourceEventListener
             'ONGR\XtCommerceConnectorBundle\Documents\CategoryObject',
             file_get_contents('Resources/config/queries/subquery_categories.sql'),
             [ 'category_id' => ImportHelper::SELF_ID ],
+            '|'
+        );
+
+        // This subquery should return just an array of strings; hence the sql - JUST_EXPLODE.
+        $subQueries[] = new ImportSubQuery(
+            $this->connection,
+            'seo_urls',
+            'slugs',
+            '',
+            ImportSubQuery::JUST_EXPLODE,
+            [],
             '|'
         );
 

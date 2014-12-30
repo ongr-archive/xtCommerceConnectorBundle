@@ -18,6 +18,8 @@ use Doctrine\DBAL\Connection;
  */
 class ImportSubQuery
 {
+    const JUST_EXPLODE = '_just_explode_';
+
     /**
      * @var string
      */
@@ -82,13 +84,17 @@ class ImportSubQuery
      */
     public function execute($idList)
     {
-        return ImportHelper::getSubObjects(
-            $this->connection,
-            explode($this->separator, $idList),
-            $this->query,
-            $this->queryParameters,
-            $this->classTo
-        );
+        if ($this->query === self::JUST_EXPLODE) {
+            return explode($this->separator, $idList);
+        } else {
+            return ImportHelper::getSubObjects(
+                $this->connection,
+                explode($this->separator, $idList),
+                $this->query,
+                $this->queryParameters,
+                $this->classTo
+            );
+        }
     }
 
     /**
