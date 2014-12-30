@@ -20,7 +20,7 @@
         "php": ">=5.4",
         "ongr/connections-bundle": "dev-master",
         "ongr/elasticsearch-bundle": "~0.1",
-        "ongr/content-bundle": "~0.1",
+        "ongr/content-bundle": "dev-master",
         "ongr/router-bundle": "~0.1"
     },
     "require-dev": {
