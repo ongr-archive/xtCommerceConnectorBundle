@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceConnectorBundle;
+namespace ONGR\XtCommerceConnectorBundle\Tests\Functional\Fixtures\Bundles\Acme\TestBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+
 /**
- * Class ONGRMagentoConnectorBundle.
- *
- * @package ONGR\MagentoConnectorBundle
+ * AcmeTestBundle for testing.
  */
-class ONGRXtConnectorBundle extends Bundle
+class AcmeTestBundle extends Bundle
 {
+    // Nothing to see here, move along.
 }

@@ -10,7 +10,7 @@ products_url,
 GROUP_CONCAT(DISTINCT seo.url_text SEPARATOR '|') as seo_urls,
 products_store_id,
 GROUP_CONCAT(DISTINCT prod_cat.categories_id SEPARATOR '|') as categories,
-CONCAT(prod.products_image,'|', GROUP_CONCAT(DISTINCT images.file SEPARATOR '|')) as images
+CONCAT(COALESCE(prod.products_image,''),'|', GROUP_CONCAT(COALESCE(DISTINCT images.file, '') SEPARATOR '|')) as images
 
 FROM `xt_products` prod
 

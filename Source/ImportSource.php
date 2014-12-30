@@ -130,9 +130,9 @@ class ImportSource extends AbstractImportSourceEventListener
 
         $subQueries[] = new ImportSubQuery(
             $this->connection,
-            'categories',
-            'categories',
-            'ONGR\XtConnectorBundle\Documents\CategoryObject',
+            'images',
+            'images',
+            'ONGR\XtCommerceConnectorBundle\Documents\ImageObject',
             file_get_contents('Resources/config/queries/subquery_images.sql'),
             [ 'image_id' => ImportHelper::SELF_ID, 'lang_id' => $this->langId ],
             '|'
@@ -142,7 +142,7 @@ class ImportSource extends AbstractImportSourceEventListener
             $this->connection,
             'categories',
             'categories',
-            'ONGR\XtConnectorBundle\Documents\CategoryObject',
+            'ONGR\XtCommerceConnectorBundle\Documents\CategoryObject',
             file_get_contents('Resources/config/queries/subquery_categories.sql'),
             [ 'category_id' => ImportHelper::SELF_ID ],
             '|'

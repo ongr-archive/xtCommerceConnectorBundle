@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtConnectorBundle\Documents;
+namespace ONGR\XtCommerceConnectorBundle\Documents;
 
 use ONGR\ContentBundle\Document\Traits\ContentTrait;
 use ONGR\ElasticsearchBundle\Document\DocumentInterface;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtConnectorBundle\Documents;
+namespace ONGR\XtCommerceConnectorBundle\Documents;
 
 /**
  * Elasticsearch Image.
