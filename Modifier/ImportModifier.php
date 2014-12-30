@@ -14,6 +14,7 @@ namespace ONGR\XtCommerceConnectorBundle\Modifier;
 use ONGR\ConnectionsBundle\EventListener\AbstractImportModifyEventListener;
 use ONGR\ConnectionsBundle\Pipeline\Item\AbstractImportItem;
 use ONGR\ConnectionsBundle\Pipeline\Item\ImportItem;
+use ONGR\XtCommerceBundle\Import\ImportHelper;
 
 /**
  * Class ImportModifier. Maps from database to Elasticsearch.
@@ -31,14 +32,6 @@ class ImportModifier extends AbstractImportModifyEventListener
             return;
         }
 
-        $document = $item->getDocument();
-        $item = $item->getEntity();
-
-        foreach ($item as $column => $value) {
-            $setter = 'set' . ucfirst($column);
-            if (method_exists($document, $setter)) {
-                $document->$setter($value);
-            }
-        }
+        $item->setDocument(ImportHelper::assign($item->getEntity(), $item->getDocument()));
     }
 }
