@@ -12,8 +12,8 @@
 namespace ONGR\XtCommerceConnectorBundle\Source;
 
 use ONGR\ConnectionsBundle\Pipeline\Event\SourcePipelineEvent;
-use ONGR\XtCommerceBundle\Import\ImportHelper;
-use ONGR\XtCommerceBundle\Import\ImportIterator;
+use ONGR\XtCommerceConnectorBundle\Import\ImportHelper;
+use ONGR\XtCommerceConnectorBundle\Import\ImportIterator;
 
 /**
  * Provides source for category import.

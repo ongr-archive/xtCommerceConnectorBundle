@@ -13,26 +13,17 @@ doctrine:
         charset:  UTF8
         logging: false
         profiling: false
-
+    orm:
+        auto_mapping: false
 
 ongr_elasticsearch:
     connections:
         default:
             hosts:
                 - { host: 127.0.0.1:9200 }
-            index_name: ongr-elasticsearch-bundle-test
-            settings:
-            refresh_interval: -1
-            number_of_replicas: 0
-        bar:
-            hosts:
-                - { host: 127.0.0.1:9200 }
-            index_name: ongr-elasticsearch-bundle-bar-test
-            settings:
-                refresh_interval: -1
-                number_of_replicas: 1
+            index_name: ongr-xtcommerceconnector-bundle-test
     managers:
         default:
             connection: default
             mappings:
-                - AcmeTestBundle
+                - ONGRXtCommerceConnectorBundle

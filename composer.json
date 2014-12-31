@@ -30,8 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ONGR\\xtCommerceConnectorBundle\\": ""
+            "ONGR\\XtCommerceConnectorBundle\\": ""
         }
-    },
-    "target-dir": "ONGR/xtCommerceConnectorBundle"
+    }
 }

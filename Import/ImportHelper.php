@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceBundle\Import;
+namespace ONGR\XtCommerceConnectorBundle\Import;
 
 use Doctrine\DBAL\Statement;
 use Doctrine\DBAL\Connection;
@@ -59,10 +59,10 @@ class ImportHelper
         foreach ($bindings as $what => $value) {
             $prepared->bindValue($what, $value);
         }
-        $statement = $connection->executeQuery($prepared);
-        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $prepared->setFetchMode(PDO::FETCH_ASSOC);
+        $prepared->execute();
 
-        return $statement;
+        return $prepared;
     }
 
     /**

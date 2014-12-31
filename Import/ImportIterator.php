@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceBundle\Import;
+namespace ONGR\XtCommerceConnectorBundle\Import;
 
 use ONGR\ConnectionsBundle\Pipeline\Item\ImportItem;
 use ONGR\ElasticsearchBundle\ORM\Repository;
@@ -48,8 +48,7 @@ class ImportIterator extends \IteratorIterator
      */
     public function current()
     {
-        $databaseThing = parent::current();
-        $product = $databaseThing[0];
+        $product = parent::current();
 
         foreach ($this->subQueries as $subQuery) {
             $product[$subQuery->getKeyTo()] = $subQuery->execute($product[$subQuery->getKeyFrom()]);

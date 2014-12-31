@@ -20,10 +20,11 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         return [
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new ONGR\XtCommerceConnectorBundle\ONGRXtCommerceConnectorBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
             new ONGR\ConnectionsBundle\ONGRConnectionsBundle(),
-            new ONGR\XtCommerceConnectorBundle\Tests\Functional\Fixtures\Bundles\Acme\TestBundle\AcmeTestBundle(),
         ];
     }
 
@@ -33,6 +34,7 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
-        $loader->load(__DIR__ . '/config/services.yml');
+        $loader->load(__DIR__ . '/config/injection_' . $this->getEnvironment() . '.yml');
+        $loader->load(__DIR__ . '/config/services_' . $this->getEnvironment() . '.yml');
     }
 }

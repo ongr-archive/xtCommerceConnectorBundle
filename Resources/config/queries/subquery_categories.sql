@@ -12,6 +12,7 @@ FROM xt_categories as cat
 
 LEFT JOIN xt_categories_description as descr ON cat.categories_id=descr.categories_id
 
+WHERE cat.categories_id = :category_id
+
 GROUP BY language_code, cat.categories_id, descr.categories_store_id
 
-WHERE cat.categories_id = :category_id

@@ -1,0 +1,17 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     localhost
+    database_port:     null
+    database_name:     ongr-xtconnector-test
+    database_user:     root
+    database_password: root
+
+    database.elastic_search.index: ongr-xtconnector-test
+
+    locale: en
+    secret: 'superdupersecretkey#pleasedonttellitanyone'
+
+    kernel.secret: 'YoDawgIheardYouLikeSecrets'
+    ongr_connections.import.modifier.class: ONGR\XtCommerceConnectorBundle\Modifier\ImportModifier
+    default_shop_id: 0
+    default_lang_id: en

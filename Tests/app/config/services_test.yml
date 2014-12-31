@@ -1,0 +1,16 @@
+# Framework Configuration
+framework:
+    esi:             ~
+    fragments:       { path: /_proxy }
+    translator:      { fallback: "%locale%" }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+    test: ~

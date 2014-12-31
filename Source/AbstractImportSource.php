@@ -13,6 +13,7 @@ namespace ONGR\XtCommerceConnectorBundle\Source;
 
 use ONGR\ConnectionsBundle\EventListener\AbstractImportSourceEventListener;
 use Doctrine\DBAL\Connection;
+use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 
 /**
@@ -49,14 +50,16 @@ abstract class AbstractImportSource extends AbstractImportSourceEventListener
      * Constructor.
      *
      * @param Connection $connection
-     * @param Repository $repository
+     * @param Manager    $manager
+     * @param string     $repositoryType
      * @param int        $shopId
      * @param string     $langId
      * @param array|null $defaultBindings
      */
     public function __construct(
         Connection $connection,
-        Repository $repository,
+        Manager $manager,
+        $repositoryType,
         $shopId,
         $langId,
         $defaultBindings = null
@@ -64,7 +67,7 @@ abstract class AbstractImportSource extends AbstractImportSourceEventListener
         // Refactor the repositories out.
 
         $this->connection = $connection;
-        $this->repository = $repository;
+        $this->repository = $manager->getRepository($repositoryType);
         $this->shopId = $shopId;
         $this->langId = $langId;
         if ($defaultBindings === null) {

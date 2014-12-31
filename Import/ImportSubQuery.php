@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceBundle\Import;
+namespace ONGR\XtCommerceConnectorBundle\Import;
 
 use Doctrine\DBAL\Connection;
 

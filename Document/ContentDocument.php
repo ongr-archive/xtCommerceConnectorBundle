@@ -9,11 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceConnectorBundle\Documents;
+namespace ONGR\XtCommerceConnectorBundle\Document;
 
 use ONGR\ContentBundle\Document\Traits\ContentTrait;
 use ONGR\ElasticsearchBundle\Document\DocumentInterface;
 use ONGR\ElasticsearchBundle\Document\DocumentTrait;
+use ONGR\ElasticsearchBundle\Annotation as ES;
 
 /**
  * Content Document.

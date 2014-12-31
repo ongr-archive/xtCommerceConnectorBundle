@@ -10,9 +10,9 @@ products_url,
 GROUP_CONCAT(DISTINCT seo.url_text SEPARATOR '|') as seo_urls,
 products_store_id,
 GROUP_CONCAT(DISTINCT prod_cat.categories_id SEPARATOR '|') as categories,
-CONCAT(COALESCE(prod.products_image,''),'|', GROUP_CONCAT(COALESCE(DISTINCT images.file, '') SEPARATOR '|')) as images
+CONCAT(COALESCE(prod.products_image,''),'|', GROUP_CONCAT(DISTINCT images.file SEPARATOR '|')) as images
 
-FROM `xt_products` prod
+FROM `xt_products` as prod
 
 LEFT JOIN `xt_products_to_categories` as prod_cat ON prod.products_id = prod_cat.products_id
 
@@ -24,6 +24,6 @@ LEFT JOIN `xt_products_description` as de ON prod.products_id = de.products_id
 
 LEFT JOIN `xt_seo_url` as seo ON seo.link_id = prod.products_id AND link_type=1 AND seo.language_code = de.language_code
 
-Group by language_code, prod.products_id, products_store_id
+WHERE de.language_code=:lang_id AND products_store_id=:store_id
 
-WHERE de.language_code=:lang_id AND prod.products_store_id=:store_id
+Group by de.language_code, prod.products_id, products_store_id

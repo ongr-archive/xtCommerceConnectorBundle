@@ -9,20 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceConnectorBundle\Documents;
+namespace ONGR\XtCommerceConnectorBundle\Document;
 
 use ONGR\ContentBundle\Document\Traits\CategoryTrait;
 use ONGR\ElasticsearchBundle\Annotation as ES;
-use ONGR\ElasticsearchBundle\Document\DocumentInterface;
-use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 
 /**
- * ElasticSearch Category document.
+ * ElasticSearch Category object.
  *
- * @ES\Document
+ * @ES\Object
  */
-class CategoryDocument implements DocumentInterface
+class CategoryObject
 {
-    use DocumentTrait;
     use CategoryTrait;
 }

@@ -9,17 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceConnectorBundle\Documents;
+namespace ONGR\XtCommerceConnectorBundle\Document;
 
 use ONGR\ContentBundle\Document\Traits\ProductTrait;
+use ONGR\ElasticsearchBundle\Document\DocumentInterface;
 use ONGR\ElasticsearchBundle\Document\DocumentTrait;
+use ONGR\ElasticsearchBundle\Annotation as ES;
 
 /**
  * Product document.
  *
  * @ES\Document
  */
-class ProductDocument
+class ProductDocument implements DocumentInterface
 {
     use DocumentTrait;
     use ProductTrait;
@@ -27,14 +29,14 @@ class ProductDocument
     /**
      * @var ImageObject[]
      *
-     * @ES\Property(name="images", type="object", objectName="XtCommerceConnectorBundle:ImageObject", multiple=true)
+     * @ES\Property(name="images", type="object", objectName="ONGRXtCommerceConnectorBundle:ImageObject", multiple=true)
      */
     private $images;
 
     /**
      * @var CategoryObject[]
      *
-     * @ES\Property(name="categories", type="object", objectName="XtCommerceConnectorBundle:CategoryObject", multiple=true)
+     * @ES\Property(name="categories", type="object", objectName="ONGRXtCommerceConnectorBundle:CategoryObject", multiple=true)
      */
     private $categories;
 

@@ -12,9 +12,9 @@
 namespace ONGR\XtCommerceConnectorBundle\Source;
 
 use ONGR\ConnectionsBundle\Pipeline\Event\SourcePipelineEvent;
-use ONGR\XtCommerceBundle\Import\ImportHelper;
-use ONGR\XtCommerceBundle\Import\ImportIterator;
-use ONGR\XtCommerceBundle\Import\ImportSubQuery;
+use ONGR\XtCommerceConnectorBundle\Import\ImportHelper;
+use ONGR\XtCommerceConnectorBundle\Import\ImportIterator;
+use ONGR\XtCommerceConnectorBundle\Import\ImportSubQuery;
 
 /**
  * Provides source for product import.

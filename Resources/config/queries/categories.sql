@@ -12,6 +12,6 @@ FROM xt_categories as cat
 
 LEFT JOIN xt_categories_description as descr ON cat.categories_id=descr.categories_id
 
-GROUP BY language_code, cat.categories_id, descr.categories_store_id
+WHERE descr.categories_store_id=:store_id AND descr.language_code=:lang_id
 
-WHERE store_id=:store_id AND language_code=:lang_id
+GROUP BY descr.language_code, cat.categories_id, descr.categories_store_id

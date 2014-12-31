@@ -9,15 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceConnectorBundle\Documents;
+namespace ONGR\XtCommerceConnectorBundle\Document;
+
+use ONGR\ElasticsearchBundle\Annotation as ES;
+use ONGR\ElasticsearchBundle\Document\DocumentInterface;
+use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 
 /**
  * Elasticsearch Image.
  *
- * @ES\Object
+ * @ES\Document
  */
-class ImageObject
+class ImageDocument implements DocumentInterface
 {
+    use DocumentTrait;
     /**
      * @var string
      *

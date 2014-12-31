@@ -14,7 +14,7 @@ namespace ONGR\XtCommerceConnectorBundle\Modifier;
 use ONGR\ConnectionsBundle\EventListener\AbstractImportModifyEventListener;
 use ONGR\ConnectionsBundle\Pipeline\Item\AbstractImportItem;
 use ONGR\ConnectionsBundle\Pipeline\Item\ImportItem;
-use ONGR\XtCommerceBundle\Import\ImportHelper;
+use ONGR\XtCommerceConnectorBundle\Import\ImportHelper;
 
 /**
  * Class ImportModifier. Maps from database to Elasticsearch.

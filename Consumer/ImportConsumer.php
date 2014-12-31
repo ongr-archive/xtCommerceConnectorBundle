@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\XtCommerceBundle\Consumer;
+namespace ONGR\XtCommerceConnectorBundle\Consumer;
 
 use ONGR\ConnectionsBundle\EventListener\AbstractImportConsumeEventListener;
 
 /**
  * Consume event listener.
  */
-class Consumer extends AbstractImportConsumeEventListener
+class ImportConsumer extends AbstractImportConsumeEventListener
 {
     // In fact the default behaviour will do nicely.
 }
