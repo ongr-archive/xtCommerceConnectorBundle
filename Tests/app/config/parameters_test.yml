@@ -13,5 +13,5 @@ parameters:
 
     kernel.secret: 'YoDawgIheardYouLikeSecrets'
     ongr_connections.import.modifier.class: ONGR\XtCommerceConnectorBundle\Modifier\ImportModifier
-    default_shop_id: 0
+    default_shop_id: 1
     default_lang_id: en

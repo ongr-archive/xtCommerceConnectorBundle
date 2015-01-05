@@ -66,7 +66,7 @@ class ImportHelper
     }
 
     /**
-     * Returns array of objects of any kind.
+     * Returns array of objects of any kind. If object is not found, an empty array is returned.
      *
      * @param Connection $connection
      * @param array      $objectIdArray
@@ -75,14 +75,16 @@ class ImportHelper
      * @param string     $class
      *
      * @return mixed[]
+     *
+     * @throws \LogicException
      */
     public static function getSubObjects($connection, $objectIdArray, $objectQuery, $queryParameters, $class)
     {
-        // If not found, [] is returned.
-        $selfKeys = array_keys($queryParameters, self::SELF_ID, true);
         $retObjects = [];
+
+        $selfKeys = array_keys($queryParameters, self::SELF_ID, true);
         foreach ($objectIdArray as $object_id) {
-            // Preparation of queryParameters.
+            // Preparation of query parameters where parameter is the id of "parent" object.
             foreach ($selfKeys as $key) {
                 $queryParameters[$key] = $object_id;
             }
@@ -92,6 +94,10 @@ class ImportHelper
                 $objectQuery,
                 $queryParameters
             ) as $sourceObject) {
+                if (!class_exists($class)) {
+                    throw new \LogicException("subQuery object instance creation failed: unknown class name {$class}");
+                }
+
                 $object = new $class();
                 $retObjects[$object_id] = self::assign($sourceObject, $object);
             }

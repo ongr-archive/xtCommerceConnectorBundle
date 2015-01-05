@@ -1,6 +1,6 @@
 SELECT
 
-    cat.categories_id,
+    cat.categories_id as id,
     cat.sort_order as sort,
     cat.categories_status as active,
     cat.parent_id as parentId,

@@ -48,13 +48,13 @@ class ImportIterator extends \IteratorIterator
      */
     public function current()
     {
-        $product = parent::current();
+        $databaseThing = parent::current();
 
         foreach ($this->subQueries as $subQuery) {
-            $product[$subQuery->getKeyTo()] = $subQuery->execute($product[$subQuery->getKeyFrom()]);
+            $databaseThing[$subQuery->getKeyTo()] = $subQuery->execute($databaseThing[$subQuery->getKeyFrom()]);
         }
 
-        return new ImportItem($product, $this->repository->createDocument());
+        return new ImportItem($databaseThing, $this->repository->createDocument());
     }
 
 }

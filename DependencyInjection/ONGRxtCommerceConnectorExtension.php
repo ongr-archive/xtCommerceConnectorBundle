@@ -30,14 +30,18 @@ class ONGRXtCommerceConnectorExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('ongr_xtCommerce.shop', $config['shop']);
+        $container->setParameter('ongr_xtcommerce.shop', $config['shop']);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
-        $loader->load('modifiers/category.yml');
-        $loader->load('modifiers/content.yml');
-        $loader->load('modifiers/product.yml');
-        $loader->load('triggers/category.yml');
-        $loader->load('triggers/content.yml');
-        $loader->load('triggers/product.yml');
+    }
+
+    /**
+     * Returns correct dependency injection alias.
+     *
+     * @return string
+     */
+    public function getAlias()
+    {
+        return 'ongr_xt_commerce_connector';
     }
 }

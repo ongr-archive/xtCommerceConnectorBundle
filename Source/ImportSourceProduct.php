@@ -39,7 +39,7 @@ class ImportSourceProduct extends AbstractImportSource
             $this->connection,
             'images',
             'images',
-            'ONGR\XtCommerceConnectorBundle\Documents\ImageObject',
+            'ONGR\XtCommerceConnectorBundle\Document\ImageObject',
             file_get_contents('Resources/config/queries/subquery_images.sql'),
             [ 'image_id' => ImportHelper::SELF_ID, 'lang_id' => $this->langId ],
             '|'
@@ -49,7 +49,7 @@ class ImportSourceProduct extends AbstractImportSource
             $this->connection,
             'categories',
             'categories',
-            'ONGR\XtCommerceConnectorBundle\Documents\CategoryObject',
+            'ONGR\XtCommerceConnectorBundle\Document\CategoryObject',
             file_get_contents('Resources/config/queries/subquery_categories.sql'),
             [ 'category_id' => ImportHelper::SELF_ID ],
             '|'
