@@ -95,7 +95,7 @@ class ImportCommandTest extends ESDoctrineTestCase
         ],
         'ONGRXtCommerceConnectorBundle:ProductDocument' => [
             [
-                'categories' => [
+                'cat' => [
                     0 => [
                         'is_active' => 1,
                         'title' => 'Categorie 1',
@@ -109,7 +109,7 @@ class ImportCommandTest extends ESDoctrineTestCase
                 'price' => '150.0000',
             ],
             [
-                'categories' => [
+                'cat' => [
                     0 => [
                         'is_active' => 1,
                         'title' => 'Categorie 1',
@@ -120,7 +120,7 @@ class ImportCommandTest extends ESDoctrineTestCase
                 'title' => 'Product with graduated pricing',
                 'description' => 'Standard product with graduated pricing',
                 'sku' => 'ean003',
-                'price' => 50.0000,
+                'price' => '50.0000',
             ],
             [
                 'images' => [
@@ -129,7 +129,7 @@ class ImportCommandTest extends ESDoctrineTestCase
                         'title' => 'shuwa.jpg',
                     ],
                 ],
-                'categories' => [
+                'cat' => [
                     '0' => [
 
                         'is_active' => '1',
@@ -148,10 +148,10 @@ class ImportCommandTest extends ESDoctrineTestCase
                 'title' => 'Default product 2',
                 'description' => "<p>Standard product with normal pricing</p>\n",
                 'sku' => 'ean006',
-                'price' => 10.0000,
+                'price' => '10.0000',
             ],
             [
-                'categories' => [
+                'cat' => [
 
                     '0' => [
 
@@ -164,7 +164,7 @@ class ImportCommandTest extends ESDoctrineTestCase
                 'title' => 'Standardproduct',
                 'description' => 'Standard product with normal pricing',
                 'sku' => 'ean001',
-                'price' => 50.0000,
+                'price' => '50.0000',
             ],
         ],
     ];

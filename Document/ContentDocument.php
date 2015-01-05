@@ -25,4 +25,4 @@ class ContentDocument implements DocumentInterface
 {
     use DocumentTrait;
     use ContentTrait;
-} 
+}

@@ -56,5 +56,4 @@ class ImportIterator extends \IteratorIterator
 
         return new ImportItem($databaseThing, $this->repository->createDocument());
     }
-
 }

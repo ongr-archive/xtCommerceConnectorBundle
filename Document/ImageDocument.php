@@ -23,6 +23,7 @@ use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 class ImageDocument implements DocumentInterface
 {
     use DocumentTrait;
+
     /**
      * @var string
      *

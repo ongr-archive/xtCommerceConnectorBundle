@@ -13,6 +13,7 @@ doctrine:
         charset:  UTF8
         logging: false
         profiling: false
+        server_version: 5.0
     orm:
         auto_mapping: false
 
