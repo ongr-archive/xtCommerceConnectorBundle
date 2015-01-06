@@ -51,7 +51,18 @@ class ImportIterator extends \IteratorIterator
         $databaseThing = parent::current();
 
         foreach ($this->subQueries as $subQuery) {
-            $databaseThing[$subQuery->getKeyTo()] = $subQuery->execute($databaseThing[$subQuery->getKeyFrom()]);
+            $parent = $databaseThing[$subQuery->getParentIdFrom()];
+
+            if (array_key_exists($subQuery->getKeyFrom(), $databaseThing)) {
+                $source = $databaseThing[$subQuery->getKeyFrom()];
+            } else {
+                $source = null;
+            }
+
+            $databaseThing[$subQuery->getKeyTo()] = $subQuery->execute(
+                $source,
+                $parent
+            );
         }
 
         return new ImportItem($databaseThing, $this->repository->createDocument());

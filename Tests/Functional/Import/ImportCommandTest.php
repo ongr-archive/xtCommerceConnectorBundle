@@ -202,8 +202,8 @@ class ImportCommandTest extends ESDoctrineTestCase
 
             // Temporary workaround for ESB issue #34 (https://github.com/ongr-io/ElasticsearchBundle/issues/34).
             usleep(90000);
-            foreach ($repository->execute(new Search(), Repository::RESULTS_ARRAY) as $itemtype) {
-                    $actualDocuments[$key][] = $itemtype;
+            foreach ($repository->execute(new Search(), Repository::RESULTS_ARRAY) as $item) {
+                    $actualDocuments[$key][] = $item;
             }
         }
 

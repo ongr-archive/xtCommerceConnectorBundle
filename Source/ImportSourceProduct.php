@@ -37,27 +37,30 @@ class ImportSourceProduct extends AbstractImportSource
 
         $subQueries[] = new ImportSubQuery(
             $this->connection,
-            'images',
+            'id',
+            null,
             'images',
             'ONGR\XtCommerceConnectorBundle\Document\ImageObject',
             file_get_contents('Resources/config/queries/subquery_images.sql'),
-            [ 'image_id' => ImportHelper::SELF_ID, 'lang_id' => $this->langId ],
+            [ 'product_id' => ImportHelper::PARENT_ID, 'lang_id' => $this->langId ],
             '|'
         );
 
         $subQueries[] = new ImportSubQuery(
             $this->connection,
-            'categories',
+            'id',
+            null,
             'categories',
             'ONGR\XtCommerceConnectorBundle\Document\CategoryObject',
             file_get_contents('Resources/config/queries/subquery_categories.sql'),
-            [ 'category_id' => ImportHelper::SELF_ID ],
+            [ 'id' => ImportHelper::PARENT_ID, 'store_id' => $this->shopId, 'lang_id' => $this->langId ],
             '|'
         );
 
         // This subquery should return just an array of strings; hence the sql - JUST_EXPLODE.
         $subQueries[] = new ImportSubQuery(
             $this->connection,
+            'id',
             'seo_urls',
             'slugs',
             '',

@@ -21,6 +21,7 @@ use PDO;
 class ImportHelper
 {
     const SELF_ID = '_self_id_';
+    const PARENT_ID = '_parent_id_';
 
     /**
      * Assigns data to object using setters.
@@ -69,7 +70,47 @@ class ImportHelper
      * Returns array of objects of any kind. If object is not found, an empty array is returned.
      *
      * @param Connection $connection
-     * @param array      $objectIdArray
+     * @param int|string $parentId
+     * @param array|null $objectIdArray
+     * @param string     $objectQuery
+     * @param array      $queryParameters
+     * @param string     $class
+     *
+     * @return mixed[]
+     */
+    public static function getSubObjects($connection, $parentId, $objectIdArray, $objectQuery, $queryParameters, $class)
+    {
+        $selfKeys = array_keys($queryParameters, self::SELF_ID, true);
+        $parentKeys = array_keys($queryParameters, self::PARENT_ID, true);
+
+        // Preparation of query parameters where parameter is the id of the parent object.
+        foreach ($parentKeys as $key) {
+            $queryParameters[$key] = $parentId;
+        }
+
+        if (is_array($objectIdArray)) {
+            $retObjects = [];
+            foreach ($objectIdArray as $object_id) {
+                // Preparation of query parameters where parameter is the id of object acquired from other query.
+                foreach ($selfKeys as $key) {
+                    $queryParameters[$key] = $object_id;
+                }
+                $result = self::getSubObject($connection, $objectQuery, $queryParameters, $class);
+                if ($result) {
+                    $retObjects[$object_id] = $result[0];
+                }
+            }
+
+            return $retObjects;
+        } else {
+            return self::getSubObject($connection, $objectQuery, $queryParameters, $class);
+        }
+    }
+
+    /**
+     * Returns array of objects of any kind. If object is not found, an empty array is returned.
+     *
+     * @param Connection $connection
      * @param string     $objectQuery
      * @param array      $queryParameters
      * @param string     $class
@@ -78,29 +119,21 @@ class ImportHelper
      *
      * @throws \LogicException
      */
-    public static function getSubObjects($connection, $objectIdArray, $objectQuery, $queryParameters, $class)
+    protected static function getSubObject($connection, $objectQuery, $queryParameters, $class)
     {
         $retObjects = [];
 
-        $selfKeys = array_keys($queryParameters, self::SELF_ID, true);
-        foreach ($objectIdArray as $object_id) {
-            // Preparation of query parameters where parameter is the id of "parent" object.
-            foreach ($selfKeys as $key) {
-                $queryParameters[$key] = $object_id;
+        foreach (self::getStatement(
+            $connection,
+            $objectQuery,
+            $queryParameters
+        ) as $sourceObject) {
+            if (!class_exists($class)) {
+                throw new \LogicException("subQuery instance creation failed: unknown class name {$class}");
             }
 
-            foreach (self::getStatement(
-                $connection,
-                $objectQuery,
-                $queryParameters
-            ) as $sourceObject) {
-                if (!class_exists($class)) {
-                    throw new \LogicException("subQuery object instance creation failed: unknown class name {$class}");
-                }
-
-                $object = new $class();
-                $retObjects[$object_id] = self::assign($sourceObject, $object);
-            }
+            $object = new $class();
+            $retObjects[] = self::assign($sourceObject, $object);
         }
 
         return $retObjects;

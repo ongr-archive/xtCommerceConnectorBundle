@@ -33,6 +33,11 @@ class ImportSubQuery
     /**
      * @var string
      */
+    private $parentIdFrom;
+
+    /**
+     * @var string
+     */
     private $classTo;
 
     /**
@@ -57,6 +62,7 @@ class ImportSubQuery
 
     /**
      * @param Connection $connection
+     * @param string     $parentIdFrom
      * @param string     $keyFrom
      * @param string     $keyTo
      * @param string     $classTo
@@ -64,10 +70,19 @@ class ImportSubQuery
      * @param array      $queryParameters
      * @param string     $separator
      */
-    public function __construct($connection, $keyFrom, $keyTo, $classTo, $query, $queryParameters, $separator = '|')
-    {
+    public function __construct(
+        $connection,
+        $parentIdFrom,
+        $keyFrom,
+        $keyTo,
+        $classTo,
+        $query,
+        $queryParameters,
+        $separator = '|'
+    ) {
         $this->classTo = $classTo;
         $this->connection = $connection;
+        $this->parentIdFrom = $parentIdFrom;
         $this->keyFrom = $keyFrom;
         $this->keyTo = $keyTo;
         $this->query = $query;
@@ -78,18 +93,24 @@ class ImportSubQuery
     /**
      * Returns object array from subquery.
      *
-     * @param mixed $idList
+     * @param array|null $idList
+     * @param int|string $parentId
      *
      * @return mixed[]
      */
-    public function execute($idList)
+    public function execute($idList, $parentId)
     {
         if ($this->query === self::JUST_EXPLODE) {
             return explode($this->separator, $idList);
         } else {
+            if ($idList !== null) {
+                $idList = explode($this->separator, $idList);
+            }
+
             return ImportHelper::getSubObjects(
                 $this->connection,
-                explode($this->separator, $idList),
+                $parentId,
+                $idList,
                 $this->query,
                 $this->queryParameters,
                 $this->classTo
@@ -207,5 +228,22 @@ class ImportSubQuery
     public function setSeparator($separator)
     {
         $this->separator = $separator;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getParentIdFrom()
+    {
+        return $this->parentIdFrom;
+    }
+
+    /**
+     * @param string $parentIdFrom
+     */
+    public function setParentIdFrom($parentIdFrom)
+    {
+        $this->parentIdFrom = $parentIdFrom;
     }
 }
