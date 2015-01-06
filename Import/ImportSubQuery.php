@@ -230,7 +230,6 @@ class ImportSubQuery
         $this->separator = $separator;
     }
 
-
     /**
      * @return string
      */
