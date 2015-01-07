@@ -30,10 +30,12 @@ class ImportHelper
      */
     public static function assign($in, $out)
     {
-        foreach ($in as $column => $value) {
-            $setter = 'set' . ucfirst($column);
-            if (method_exists($out, $setter)) {
-                $out->$setter($value);
+        if (is_array($in) || $in instanceof \Traversable) {
+            foreach ($in as $column => $value) {
+                $setter = 'set' . ucfirst($column);
+                if (method_exists($out, $setter)) {
+                    $out->$setter($value);
+                }
             }
         }
 

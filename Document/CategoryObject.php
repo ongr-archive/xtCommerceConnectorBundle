@@ -17,6 +17,7 @@ use ONGR\ElasticsearchBundle\Annotation as ES;
 /**
  * ElasticSearch Category object.
  *
+ * @codeCoverageIgnore
  * @ES\Object
  */
 class CategoryObject

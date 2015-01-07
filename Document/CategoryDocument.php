@@ -19,6 +19,7 @@ use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 /**
  * ElasticSearch Category document.
  *
+ * @codeCoverageIgnore
  * @ES\Document
  */
 class CategoryDocument implements DocumentInterface

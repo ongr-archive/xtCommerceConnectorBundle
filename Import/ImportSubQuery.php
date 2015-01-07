@@ -192,6 +192,12 @@ class ImportSubQuery
         return $retObjects;
     }
 
+    /*
+     * There is little point in testing getters and setters.
+     */
+
+     // @codeCoverageIgnoreStart
+
     /**
      * @return string
      */
@@ -319,4 +325,6 @@ class ImportSubQuery
     {
         $this->parentIdFrom = $parentIdFrom;
     }
+
+     // @codeCoverageIgnoreEnd
 }

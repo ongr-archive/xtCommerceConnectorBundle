@@ -19,6 +19,7 @@ use ONGR\ElasticsearchBundle\Annotation as ES;
 /**
  * Content Document.
  *
+ * @codeCoverageIgnore
  * @ES\Document
  */
 class ContentDocument implements DocumentInterface
