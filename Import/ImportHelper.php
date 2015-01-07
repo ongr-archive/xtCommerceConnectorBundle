@@ -62,5 +62,4 @@ class ImportHelper
 
         return $prepared;
     }
-
 }

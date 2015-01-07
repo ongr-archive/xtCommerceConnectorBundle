@@ -207,6 +207,9 @@ class ImportCommandTest extends ESDoctrineTestCase
             }
         }
 
+        sort($this->expectedDocuments);
+        sort($actualDocuments);
+
         $this->assertEquals($this->expectedDocuments, $actualDocuments);
     }
 }
