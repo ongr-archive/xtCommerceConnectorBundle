@@ -207,8 +207,10 @@ class ImportCommandTest extends ESDoctrineTestCase
             }
         }
 
-        sort($this->expectedDocuments);
-        sort($actualDocuments);
+        foreach ($this->repositories as $key) {
+            sort($actualDocuments[$key]);
+            sort($this->expectedDocuments[$key]);
+        }
 
         $this->assertEquals($this->expectedDocuments, $actualDocuments);
     }
