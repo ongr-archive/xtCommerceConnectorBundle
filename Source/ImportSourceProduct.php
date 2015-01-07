@@ -42,7 +42,7 @@ class ImportSourceProduct extends AbstractImportSource
             'images',
             'ONGR\XtCommerceConnectorBundle\Document\ImageObject',
             file_get_contents('Resources/config/queries/subquery_images.sql'),
-            [ 'product_id' => ImportHelper::PARENT_ID, 'lang_id' => $this->langId ],
+            [ 'product_id' => ImportSubQuery::PARENT_ID, 'lang_id' => $this->langId ],
             '|'
         );
 
@@ -53,7 +53,7 @@ class ImportSourceProduct extends AbstractImportSource
             'categories',
             'ONGR\XtCommerceConnectorBundle\Document\CategoryObject',
             file_get_contents('Resources/config/queries/subquery_categories.sql'),
-            [ 'id' => ImportHelper::PARENT_ID, 'store_id' => $this->shopId, 'lang_id' => $this->langId ],
+            [ 'id' => ImportSubQuery::PARENT_ID, 'store_id' => $this->shopId, 'lang_id' => $this->langId ],
             '|'
         );
 

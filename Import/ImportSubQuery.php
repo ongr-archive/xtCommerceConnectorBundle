@@ -18,6 +18,9 @@ use Doctrine\DBAL\Connection;
  */
 class ImportSubQuery
 {
+    const SELF_ID = '_self_id_';
+    const PARENT_ID = '_parent_id_';
+
     const JUST_EXPLODE = '_just_explode_';
 
     /**
@@ -107,8 +110,7 @@ class ImportSubQuery
                 $idList = explode($this->separator, $idList);
             }
 
-            return ImportHelper::getSubObjects(
-                $this->connection,
+            return $this->getSubObjects(
                 $parentId,
                 $idList,
                 $this->query,
@@ -116,6 +118,78 @@ class ImportSubQuery
                 $this->classTo
             );
         }
+    }
+
+    /**
+     * Wrapper and additional logic pre-processing for getSubResults.
+     *
+     * @param int|string $parentId
+     * @param array|null $objectIdArray
+     * @param string     $objectQuery
+     * @param array      $queryParameters
+     * @param string     $class
+     *
+     * @return mixed[]
+     */
+    protected function getSubObjects($parentId, $objectIdArray, $objectQuery, $queryParameters, $class)
+    {
+        $selfKeys = array_keys($queryParameters, self::SELF_ID, true);
+        $parentKeys = array_keys($queryParameters, self::PARENT_ID, true);
+
+        // Preparation of query parameters where parameter is the id of the parent object.
+        foreach ($parentKeys as $key) {
+            $queryParameters[$key] = $parentId;
+        }
+
+        if (is_array($objectIdArray)) {
+            $retObjects = [];
+
+            foreach ($objectIdArray as $object_id) {
+                // Preparation of query parameters where parameter is the id of object acquired from other query.
+                foreach ($selfKeys as $key) {
+                    $queryParameters[$key] = $object_id;
+                }
+                $result = self::getSubResults($objectQuery, $queryParameters, $class);
+                if (count($result) > 0) {
+                    $retObjects[$object_id] = $result[0];
+                }
+            }
+
+            return $retObjects;
+        } else {
+            return self::getSubResults($objectQuery, $queryParameters, $class);
+        }
+    }
+
+    /**
+     * Returns array of objects of any kind. If object is not found, an empty array is returned.
+     *
+     * @param string $objectQuery
+     * @param array  $queryParameters
+     * @param string $class
+     *
+     * @return mixed[]
+     *
+     * @throws \LogicException
+     */
+    protected function getSubResults($objectQuery, $queryParameters, $class)
+    {
+        $retObjects = [];
+
+        foreach (ImportHelper::getStatement(
+            $this->connection,
+            $objectQuery,
+            $queryParameters
+        ) as $sourceObject) {
+            if (!class_exists($class)) {
+                throw new \LogicException("subQuery result object instance creation failed: unknown class {$class}");
+            }
+
+            $object = new $class();
+            $retObjects[] = ImportHelper::assign($sourceObject, $object);
+        }
+
+        return $retObjects;
     }
 
     /**
