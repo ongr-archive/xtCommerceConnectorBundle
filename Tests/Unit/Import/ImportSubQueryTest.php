@@ -13,7 +13,7 @@ namespace ONGR\XtCommerceConnectorBundle\Tests\Unit\Import;
 
 use ONGR\XtCommerceConnectorBundle\Import\ImportSubQuery;
 
-class ImportSubQueryTests extends \PHPUnit_Framework_TestCase
+class ImportSubQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests behaviour of subQuery class with single-result subquery.
