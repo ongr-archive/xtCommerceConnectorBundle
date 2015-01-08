@@ -72,6 +72,8 @@ abstract class AbstractImportSource extends AbstractImportSourceEventListener
         $this->langId = $langId;
         if ($defaultBindings === null) {
             $this->defaultBindings = ['store_id' => $this->shopId, 'lang_id' => $this->langId];
+        } else {
+            $this->defaultBindings = $defaultBindings;
         }
     }
 }

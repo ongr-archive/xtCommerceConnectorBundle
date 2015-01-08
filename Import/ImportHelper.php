@@ -56,8 +56,10 @@ class ImportHelper
     public static function getStatement($connection, $sql, $bindings)
     {
         $prepared = $connection->prepare($sql);
-        foreach ($bindings as $what => $value) {
-            $prepared->bindValue($what, $value);
+        if (is_array($bindings) || $bindings instanceof \Traversable) {
+            foreach ($bindings as $what => $value) {
+                $prepared->bindValue($what, $value);
+            }
         }
         $prepared->setFetchMode(PDO::FETCH_ASSOC);
         $prepared->execute();
