@@ -37,7 +37,8 @@ class ProductDocument implements DocumentInterface
     /**
      * @var CategoryObject[]
      *
-     * @ES\Property(name="cat", type="object", objectName="ONGRXtCommerceConnectorBundle:CategoryObject", multiple=true)
+     * @ES\Property(name="categories", type="object",
+     * objectName="ONGRXtCommerceConnectorBundle:CategoryObject", multiple=true)
      */
     private $categories;
 

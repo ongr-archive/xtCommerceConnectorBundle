@@ -17,4 +17,3 @@ LEFT JOIN `xt_categories` as cat ON cat.categories_id=prod_cat.categories_id
 LEFT JOIN `xt_categories_description` as descr ON cat.categories_id=descr.categories_id
 
 WHERE descr.language_code=:lang_id AND prod_cat.store_id=:store_id AND prod.products_id=:id
-

@@ -12,4 +12,3 @@ left join xt_seo_url as seo ON content.language_code=seo.language_code AND conte
 WHERE content.language_code=:lang_id
 
 GROUP BY content.language_code, content_id
-
