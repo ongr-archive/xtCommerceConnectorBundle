@@ -15,8 +15,6 @@ use ONGR\XtCommerceConnectorBundle\Source\ImportSourceCategory;
 
 class ImportSourceCategoryTest extends CommonSourceTests
 {
-
-
     /**
      * Test default behaviour of ImportSourceCategory.
      */
@@ -69,4 +67,4 @@ class ImportSourceCategoryTest extends CommonSourceTests
 
         $import->onSource($mockEvent);
     }
-} 
+}
