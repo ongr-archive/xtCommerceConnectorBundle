@@ -95,7 +95,7 @@ class ImportCommandTest extends ESDoctrineTestCase
         ],
         'ONGRXtCommerceConnectorBundle:ProductDocument' => [
             [
-                'cat' => [
+                'categories' => [
                     0 => [
                         'is_active' => 1,
                         'title' => 'Categorie 1',
@@ -109,7 +109,7 @@ class ImportCommandTest extends ESDoctrineTestCase
                 'price' => '150.0000',
             ],
             [
-                'cat' => [
+                'categories' => [
                     0 => [
                         'is_active' => 1,
                         'title' => 'Categorie 1',
@@ -129,7 +129,7 @@ class ImportCommandTest extends ESDoctrineTestCase
                         'title' => 'shuwa.jpg',
                     ],
                 ],
-                'cat' => [
+                'categories' => [
                     '0' => [
 
                         'is_active' => '1',
@@ -151,7 +151,7 @@ class ImportCommandTest extends ESDoctrineTestCase
                 'price' => '10.0000',
             ],
             [
-                'cat' => [
+                'categories' => [
 
                     '0' => [
 
