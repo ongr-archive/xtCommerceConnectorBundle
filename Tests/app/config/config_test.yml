@@ -1,0 +1,30 @@
+imports:
+    - { resource: parameters_test.yml }
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+        logging: false
+        profiling: false
+        server_version: 5.0
+    orm:
+        auto_mapping: false
+
+ongr_elasticsearch:
+    connections:
+        default:
+            hosts:
+                - { host: 127.0.0.1:9200 }
+            index_name: ongr-xtcommerceconnector-bundle-test
+    managers:
+        default:
+            connection: default
+            mappings:
+                - ONGRXtCommerceConnectorBundle

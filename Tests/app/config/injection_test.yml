@@ -1,0 +1,71 @@
+services:
+    test.import.source.category:
+           class: ONGR\XtCommerceConnectorBundle\Source\ImportSourceCategory
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - ONGRXtCommerceConnectorBundle:CategoryDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
+
+    test.import.source.image:
+           class: ONGR\XtCommerceConnectorBundle\Source\ImportSourceImage
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - ONGRXtCommerceConnectorBundle:ImageDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
+
+    test.import.source.content:
+           class: ONGR\XtCommerceConnectorBundle\Source\ImportSourceContent
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - ONGRXtCommerceConnectorBundle:ContentDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
+
+    test.import.source.product:
+           class: ONGR\XtCommerceConnectorBundle\Source\ImportSourceProduct
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - ONGRXtCommerceConnectorBundle:ProductDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
+
+
+    test.import.modifier:
+        class: ONGR\XtCommerceConnectorBundle\Modifier\ImportModifier
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.modify, method: onModify }
+
+    test.import.consumer:
+        class: ONGR\XtCommerceConnectorBundle\Consumer\ImportConsumer
+        parent: ongr_connections.import.consumer
+        arguments:
+            - @es.manager
+            - ONGR\ConnectionsBundle\Pipeline\Item\ImportItem
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.consume, method: onConsume }
+
+    test.import.finish:
+        class: %ongr_connections.import.finish.class%
+        parent: ongr_connections.import.finish
+        arguments:
+            - @es.manager
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.finish, method: onFinish }
