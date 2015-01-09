@@ -19,7 +19,6 @@ use ONGR\ElasticsearchBundle\Annotation as ES;
 /**
  * Product document.
  *
- * @codeCoverageIgnore
  * @ES\Document
  */
 class ProductDocument implements DocumentInterface

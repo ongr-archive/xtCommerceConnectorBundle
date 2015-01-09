@@ -12,12 +12,38 @@
 namespace ONGR\XtCommerceConnectorBundle\Tests\Unit\Import;
 
 use ONGR\XtCommerceConnectorBundle\Import\ImportSubQuery;
+use ONGR\XtCommerceConnectorBundle\Tests\Unit;
 
 /**
  * Class ImportSubQueryTest.
  */
-class ImportSubQueryTest extends \PHPUnit_Framework_TestCase
+class ImportSubQueryTest extends Unit\AbstractGetterSetterTest
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getFieldsData()
+    {
+        return [
+            ['keyFrom'],
+            ['keyTo'],
+            ['parentIdFrom'],
+            ['classTo'],
+            ['query'],
+            ['separator'],
+            ['queryParameters'],
+            ['connection'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getClassName()
+    {
+        return 'ONGR\XtCommerceConnectorBundle\Import\ImportSubQuery';
+    }
+
     /**
      * Tests behaviour of subQuery class with single-result subquery.
      */

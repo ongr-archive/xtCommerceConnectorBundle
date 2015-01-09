@@ -18,7 +18,6 @@ use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 /**
  * Elasticsearch Image.
  *
- * @codeCoverageIgnore
  * @ES\Document
  */
 class ImageDocument implements DocumentInterface

@@ -16,7 +16,6 @@ use ONGR\ElasticsearchBundle\Annotation as ES;
 /**
  * Elasticsearch Image object contained within product document.
  *
- * @codeCoverageIgnore
  * @ES\Object
  */
 class ImageObject
