@@ -12,12 +12,12 @@
 namespace ONGR\XtCommerceConnectorBundle\Tests\Unit\Import;
 
 use ONGR\XtCommerceConnectorBundle\Import\ImportSubQuery;
-use ONGR\XtCommerceConnectorBundle\Tests\Unit;
+use ONGR\XtCommerceConnectorBundle\Tests\Unit\AbstractGetterSetterTest;
 
 /**
  * Class ImportSubQueryTest.
  */
-class ImportSubQueryTest extends Unit\AbstractGetterSetterTest
+class ImportSubQueryTest extends AbstractGetterSetterTest
 {
     /**
      * {@inheritdoc}
