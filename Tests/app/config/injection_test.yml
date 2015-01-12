@@ -1,10 +1,12 @@
 services:
     test.import.source.category:
-           class: ONGR\XtCommerceConnectorBundle\Source\ImportSourceCategory
+           class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
            parent: ongr_connections.import.source
            arguments:
                - @doctrine.dbal.default_connection
                - @es.manager
+               - []
+               - %query.categories%
                - ONGRXtCommerceConnectorBundle:CategoryDocument
                - %default_shop_id%
                - %default_lang_id%
@@ -12,35 +14,43 @@ services:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
 
     test.import.source.image:
-           class: ONGR\XtCommerceConnectorBundle\Source\ImportSourceImage
+           class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
            parent: ongr_connections.import.source
            arguments:
                - @doctrine.dbal.default_connection
                - @es.manager
+               - []
+               - %query.images%
                - ONGRXtCommerceConnectorBundle:ImageDocument
                - %default_shop_id%
                - %default_lang_id%
+               - { lang_id: %default_lang_id% }
            tags:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
 
     test.import.source.content:
-           class: ONGR\XtCommerceConnectorBundle\Source\ImportSourceContent
+           class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
            parent: ongr_connections.import.source
            arguments:
                - @doctrine.dbal.default_connection
                - @es.manager
+               - []
+               - %query.content%
                - ONGRXtCommerceConnectorBundle:ContentDocument
                - %default_shop_id%
                - %default_lang_id%
+               - { lang_id: %default_lang_id% }
            tags:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
 
     test.import.source.product:
-           class: ONGR\XtCommerceConnectorBundle\Source\ImportSourceProduct
+           class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
            parent: ongr_connections.import.source
            arguments:
                - @doctrine.dbal.default_connection
                - @es.manager
+               - [ @ongr_xt_commerce_connector.image_subquery, @ongr_xt_commerce_connector.category_subquery, @ongr_xt_commerce_connector.slug_subquery]
+               - %query.products%
                - ONGRXtCommerceConnectorBundle:ProductDocument
                - %default_shop_id%
                - %default_lang_id%
@@ -69,3 +79,36 @@ services:
             - @es.manager
         tags:
             - { name: kernel.event_listener, event: ongr.pipeline.import.default.finish, method: onFinish }
+
+    ongr_xt_commerce_connector.image_subquery:
+        class: %ongr_xt_commerce_connector.subquery.class%
+        arguments:
+            - @doctrine.dbal.default_connection
+            - id
+            - null
+            - images
+            - ONGR\XtCommerceConnectorBundle\Document\ImageObject
+            - %subquery.images%
+            - { product_id: %importSubQuery.parent_id.value%, lang_id: %default_lang_id% }
+
+    ongr_xt_commerce_connector.category_subquery:
+        class: %ongr_xt_commerce_connector.subquery.class%
+        arguments:
+            - @doctrine.dbal.default_connection
+            - id
+            - null
+            - categories
+            - ONGR\XtCommerceConnectorBundle\Document\CategoryObject
+            - %subquery.categories%
+            - { id: %importSubQuery.parent_id.value%, store_id: %default_shop_id%, lang_id: %default_lang_id% }
+
+    ongr_xt_commerce_connector.slug_subquery:
+        class: %ongr_xt_commerce_connector.subquery.class%
+        arguments:
+            - @doctrine.dbal.default_connection
+            - id
+            - seo_urls
+            - slugs
+            - null
+            - %importSubQuery.just_explode.value%
+            - [ ]
