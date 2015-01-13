@@ -28,7 +28,13 @@ class ONGRXtCommerceConnectorExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $fileLocator = new FileLocator(__DIR__ . '/../Resources/config');
+
+        $xmlLoader = new Loader\XmlFileLoader($container, $fileLocator);
+        $xmlLoader->load('constants.xml');
+        $xmlLoader->load('queries.xml');
+
+        $loader = new Loader\YamlFileLoader($container, $fileLocator);
         $loader->load('services.yml');
     }
 

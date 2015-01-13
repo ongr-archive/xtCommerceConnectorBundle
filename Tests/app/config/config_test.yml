@@ -1,6 +1,4 @@
 imports:
-    - { resource: constants.xml }
-    - { resource: queries.xml }
     - { resource: parameters_test.yml }
 
 # Doctrine Configuration
