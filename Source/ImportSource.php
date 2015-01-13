@@ -11,15 +11,19 @@
 
 namespace ONGR\XtCommerceConnectorBundle\Source;
 
-use ONGR\ConnectionsBundle\EventListener\AbstractImportSourceEventListener;
 use Doctrine\DBAL\Connection;
+use ONGR\ConnectionsBundle\EventListener\AbstractImportSourceEventListener;
+use ONGR\ConnectionsBundle\Pipeline\Event\SourcePipelineEvent;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
+use ONGR\XtCommerceConnectorBundle\Import\ImportHelper;
+use ONGR\XtCommerceConnectorBundle\Import\ImportIterator;
+use ONGR\XtCommerceConnectorBundle\Import\ImportSubQuery;
 
 /**
- * Provides abstract source for import.
+ * Provides sources for import.
  */
-abstract class AbstractImportSource extends AbstractImportSourceEventListener
+class ImportSource extends AbstractImportSourceEventListener
 {
     /**
      * @var Connection Connection to database.
@@ -47,33 +51,62 @@ abstract class AbstractImportSource extends AbstractImportSourceEventListener
     protected $defaultBindings;
 
     /**
+     * @var ImportSubQuery[]
+     */
+    protected $subQueries;
+
+    /**
+     * @var string
+     */
+    protected $sql;
+
+    /**
      * Constructor.
      *
-     * @param Connection $connection
-     * @param Manager    $manager
-     * @param string     $repositoryType
-     * @param int        $shopId
-     * @param string     $langId
-     * @param array|null $defaultBindings
+     * @param Connection       $connection
+     * @param Manager          $manager
+     * @param ImportSubQuery[] $subQueries
+     * @param string           $sql
+     * @param string           $repositoryType
+     * @param int              $shopId
+     * @param string           $langId
+     * @param array|null       $defaultBindings
      */
     public function __construct(
         Connection $connection,
         Manager $manager,
+        $subQueries,
+        $sql,
         $repositoryType,
         $shopId,
         $langId,
         $defaultBindings = null
     ) {
-        // Refactor the repositories out.
-
         $this->connection = $connection;
         $this->repository = $manager->getRepository($repositoryType);
+        $this->subQueries = $subQueries;
         $this->shopId = $shopId;
         $this->langId = $langId;
+        $this->sql = $sql;
+
         if ($defaultBindings === null) {
             $this->defaultBindings = ['store_id' => $this->shopId, 'lang_id' => $this->langId];
         } else {
             $this->defaultBindings = $defaultBindings;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function onSource(SourcePipelineEvent $event)
+    {
+        $event->addSource(
+            new ImportIterator(
+                ImportHelper::getStatement($this->connection, $this->sql, $this->defaultBindings),
+                $this->subQueries,
+                $this->repository
+            )
+        );
     }
 }

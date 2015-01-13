@@ -11,16 +11,16 @@
 
 namespace ONGR\XtCommerceConnectorBundle\Tests\Unit\Source;
 
-use ONGR\XtCommerceConnectorBundle\Source\ImportSourceCategory;
+use ONGR\XtCommerceConnectorBundle\Source\ImportSource;
 
-class ImportSourceCategoryTest extends CommonSourceTests
+class ImportSourceTest extends CommonSourceTests
 {
     /**
-     * Test default behaviour of ImportSourceCategory.
+     * Test default behaviour of ImportSource.
      */
-    public function testSourceCategoryDefault()
+    public function testImportSourceDefault()
     {
-        $sql = file_get_contents('Resources/config/queries/categories.sql');
+        $sql = 'test';
 
         $mockStatement = $this->getMockStatement();
 
@@ -30,9 +30,11 @@ class ImportSourceCategoryTest extends CommonSourceTests
 
         $mockEvent = $this->getMock('ONGR\ConnectionsBundle\Pipeline\Event\SourcePipelineEvent');
 
-        $import = new ImportSourceCategory(
+        $import = new ImportSource(
             $mockConnection,
             $mockManager,
+            [],
+            $sql,
             self::DEFAULT_REPOSITORY,
             self::DEFAULT_SHOP_ID,
             self::DEFAULT_LANG_ID
@@ -42,11 +44,11 @@ class ImportSourceCategoryTest extends CommonSourceTests
     }
 
     /**
-     * Test default behaviour of ImportSourceCategory with other binding.
+     * Test default behaviour of ImportSource with other binding.
      */
-    public function testSourceCategoryOtherBindings()
+    public function testImportSourceOtherBindings()
     {
-        $sql = file_get_contents('Resources/config/queries/categories.sql');
+        $sql = 'test';
 
         $mockStatement = $this->getMockStatement();
 
@@ -56,9 +58,11 @@ class ImportSourceCategoryTest extends CommonSourceTests
 
         $mockEvent = $this->getMock('ONGR\ConnectionsBundle\Pipeline\Event\SourcePipelineEvent');
 
-        $import = new ImportSourceCategory(
+        $import = new ImportSource(
             $mockConnection,
             $mockManager,
+            [],
+            $sql,
             self::DEFAULT_REPOSITORY,
             self::DEFAULT_SHOP_ID,
             self::DEFAULT_LANG_ID,
