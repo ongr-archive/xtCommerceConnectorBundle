@@ -16,9 +16,9 @@ use ONGR\XtCommerceConnectorBundle\Source\ImportSource;
 class ImportSourceTest extends CommonSourceTests
 {
     /**
-     * Test default behaviour of ImportSourceCategory.
+     * Test default behaviour of ImportSource.
      */
-    public function testSourceCategoryDefault()
+    public function testImportSourceDefault()
     {
         $sql = 'test';
 
@@ -44,9 +44,9 @@ class ImportSourceTest extends CommonSourceTests
     }
 
     /**
-     * Test default behaviour of ImportSourceCategory with other binding.
+     * Test default behaviour of ImportSource with other binding.
      */
-    public function testSourceCategoryOtherBindings()
+    public function testImportSourceOtherBindings()
     {
         $sql = 'test';
 

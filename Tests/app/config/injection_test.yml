@@ -1,6 +1,6 @@
 services:
     test.import.source.category:
-           class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
+           class: %ongr_xt_commerce_connector.importsource.class%
            parent: ongr_connections.import.source
            arguments:
                - @doctrine.dbal.default_connection
@@ -14,7 +14,7 @@ services:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
 
     test.import.source.image:
-           class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
+           class: %ongr_xt_commerce_connector.importsource.class%
            parent: ongr_connections.import.source
            arguments:
                - @doctrine.dbal.default_connection
@@ -29,7 +29,7 @@ services:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
 
     test.import.source.content:
-           class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
+           class: %ongr_xt_commerce_connector.importsource.class%
            parent: ongr_connections.import.source
            arguments:
                - @doctrine.dbal.default_connection
@@ -44,7 +44,7 @@ services:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
 
     test.import.source.product:
-           class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
+           class: %ongr_xt_commerce_connector.importsource.class%
            parent: ongr_connections.import.source
            arguments:
                - @doctrine.dbal.default_connection
@@ -59,12 +59,12 @@ services:
 
 
     test.import.modifier:
-        class: ONGR\XtCommerceConnectorBundle\Modifier\ImportModifier
+        class: %ongr_connections.import.modifier.class%
         tags:
             - { name: kernel.event_listener, event: ongr.pipeline.import.default.modify, method: onModify }
 
     test.import.consumer:
-        class: ONGR\XtCommerceConnectorBundle\Consumer\ImportConsumer
+        class: %ongr_connections.import.consumer.class%
         parent: ongr_connections.import.consumer
         arguments:
             - @es.manager
@@ -111,4 +111,4 @@ services:
             - slugs
             - null
             - %importSubQuery.just_explode.value%
-            - [ ]
+            - []

@@ -11,8 +11,8 @@
 
 namespace ONGR\XtCommerceConnectorBundle\Source;
 
-use ONGR\ConnectionsBundle\EventListener\AbstractImportSourceEventListener;
 use Doctrine\DBAL\Connection;
+use ONGR\ConnectionsBundle\EventListener\AbstractImportSourceEventListener;
 use ONGR\ConnectionsBundle\Pipeline\Event\SourcePipelineEvent;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
