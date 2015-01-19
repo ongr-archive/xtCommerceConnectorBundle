@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters_test.yml }
+    - { resource: data_sync_source_test.yml }
 
 # Doctrine Configuration
 doctrine:
@@ -28,3 +29,4 @@ ongr_elasticsearch:
             connection: default
             mappings:
                 - ONGRXtCommerceConnectorBundle
+                - ONGRConnectionsBundle

@@ -1,0 +1,152 @@
+parameters:
+    ongr_connections.extractor.passthrough_extractor.class: ONGR\ConnectionsBundle\Sync\Extractor\PassthroughExtractor
+    ongr_connections.sync.relations_collection.class: ONGR\ConnectionsBundle\Sync\Extractor\Relation\RelationsCollection
+    ongr_connections.sql_relations.related_table.class: ONGR\ConnectionsBundle\Sync\Extractor\Relation\JoinStatement
+
+services:
+    ongr_connections.sync.extractor.doctrine_extractor:
+        class: ONGR\ConnectionsBundle\Sync\Extractor\DoctrineExtractor
+        calls:
+            - [ setRelationsCollection, [ @ongr_connections.sync.relations_collection ] ]
+            - [ setConnection, [ @database_connection ] ]
+            - [ setStorageFacility, [ @ongr_connections.sync.sync_storage ] ]
+
+    ongr_connections.sync.extractor.passthrough_extractor:
+        class: %ongr_connections.extractor.passthrough_extractor.class%
+        calls:
+            - [ setStorageFacility, [ @ongr_connections.sync.sync_storage ] ]
+
+    ongr_connections.sync.relations_collection:
+        class: %ongr_connections.sync.relations_collection.class%
+
+    test.sync.data_sync.source:
+        class: %ongr_connections.sync.data_sync.source.class%
+        arguments:
+            - @ongr_connections.sync.diff_provider.binlog_diff_provider
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.data_sync.some-target.source, method: onSource }
+
+    test.sync.data_sync.consume:
+        class: %ongr_connections.sync.data_sync.consume.class%
+        arguments:
+            - @ongr_connections.sync.extractor.doctrine_extractor
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.data_sync.some-target.consume, method: onConsume }
+
+### RELATIONS FOR CATEGORIES
+    ongr_xt_commerce.sql_relations.category.delete:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_categories, D, 1, category, OLD.categories_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.category.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_categories, U, 1, category, OLD.categories_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.category.create:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_categories, C, 1, category, NEW.categories_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.category_description.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_categories_description, U, 1, category, NEW.categories_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+### RELATIONS FOR CONTENT
+    ongr_xt_commerce.sql_relations.content.delete:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_content_elements, D, 1, content, OLD.content_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.content.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_content_elements, U, 1, content, OLD.content_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.content.create:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_content_elements, C, 1, content, NEW.content_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.content_seo.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_seo_url, U, 1, content, OLD.link_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+### RELATIONS FOR IMAGES
+    ongr_xt_commerce.sql_relations.image.delete:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_media, D, 1, image, OLD.id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.image.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_media, U, 1, image, OLD.id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.image.create:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_media, C, 1, image, NEW.id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.image_description.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_media_description, U, 1, image, OLD.id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+### RELATIONS FOR PRODUCTS
+    ongr_xt_commerce.sql_relations.product.delete:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_products, D, 1, product, OLD.products_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.product.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_products, U, 1, product, OLD.products_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.product.create:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_products, C, 1, product, NEW.id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.product_category.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_products_to_categories, U, 1, product, OLD.products_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.product_description.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_products_description, U, 1, product, OLD.products_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.product_images.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_media_link, U, 1, product, OLD.link_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
+
+    ongr_xt_commerce.sql_relations.product_seo.update:
+        class: %ongr_connections.sql_relations.composed_relation.class%
+        arguments: [xt_seo_url, U, 1, product, OLD.link_id]
+        tags:
+            - { name: ongr_connections.sql_relation }
