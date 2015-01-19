@@ -37,7 +37,7 @@ class ImportSyncConsumer extends ImportConsumer
      */
     public function __construct(Manager $manager, SyncStorage $syncStorage)
     {
-        parent::__construct($manager, 'ONGR\ConnectionsBundle\Pipeline\Item\ImportItem');
+        $this->manager = $manager;
         $this->syncStorage = $syncStorage;
     }
 
