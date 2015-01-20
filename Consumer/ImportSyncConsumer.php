@@ -11,6 +11,8 @@
 
 namespace ONGR\XtCommerceConnectorBundle\Consumer;
 
+use ONGR\ConnectionsBundle\EventListener\AbstractConsumeEventListener;
+use ONGR\ConnectionsBundle\Log\EventLoggerAwareTrait;
 use ONGR\ConnectionsBundle\Pipeline\Event\ItemPipelineEvent;
 use ONGR\ConnectionsBundle\Pipeline\Item\ImportItem;
 use ONGR\ConnectionsBundle\Sync\SyncStorage\SyncStorage;
@@ -19,8 +21,10 @@ use ONGR\ElasticsearchBundle\ORM\Manager;
 /**
  * This consumer cleans up after syncing. It is a good consumer.
  */
-class ImportSyncConsumer extends ImportConsumer
+class ImportSyncConsumer extends AbstractConsumeEventListener
 {
+    use EventLoggerAwareTrait;
+
     /**
      * @var SyncStorage
      */
@@ -46,7 +50,7 @@ class ImportSyncConsumer extends ImportConsumer
      *
      * @param ItemPipelineEvent $event
      */
-    public function onConsume(ItemPipelineEvent $event)
+    public function consume(ItemPipelineEvent $event)
     {
         /** @var ImportItem $importItem */
         $importItem = $event->getItem();

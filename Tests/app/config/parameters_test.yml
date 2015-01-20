@@ -12,10 +12,3 @@ parameters:
     secret: 'superdupersecretkey#pleasedonttellitanyone'
 
     kernel.secret: 'YoDawgIheardYouLikeSecrets'
-    ongr_connections.import.modifier.class: ONGR\XtCommerceConnectorBundle\Modifier\ImportModifier
-    ongr_connections.import.consumer.class: ONGR\XtCommerceConnectorBundle\Consumer\ImportConsumer
-    ongr_xt_commerce_connector.subquery.class: ONGR\XtCommerceConnectorBundle\Import\ImportSubQuery
-    ongr_xt_commerce_connector.importsource.class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
-    ongr_xt_commerce_connector.deletesource.class: ONGR\XtCommerceConnectorBundle\Source\DeleteSource
-    default_shop_id: 1
-    default_lang_id: en

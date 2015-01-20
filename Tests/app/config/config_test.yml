@@ -1,6 +1,5 @@
 imports:
     - { resource: parameters_test.yml }
-    - { resource: data_sync_source_test.yml }
 
 # Doctrine Configuration
 doctrine:

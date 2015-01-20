@@ -1,4 +1,4 @@
-/* Really makes a difference! */
+/* Provides data for sync. */
 INSERT INTO `xt_categories` VALUES (3,NULL,NULL,1,'',1,2,0,1,'','',0,'','',0,NULL,'2008-08-08 00:40:19',0,'',0,'');
 INSERT INTO `xt_categories_description` VALUES (3,'de','New category',NULL,NULL,NULL,1);
 INSERT INTO `xt_categories_description` VALUES (3,'en','New category ENGLISH',NULL,NULL,NULL,1);
