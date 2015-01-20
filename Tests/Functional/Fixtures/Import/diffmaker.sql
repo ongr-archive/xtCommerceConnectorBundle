@@ -7,7 +7,7 @@ UPDATE `xt_categories_description` SET categories_name='Altered category' where 
 -- 1 U category : 1
 UPDATE `xt_seo_url` SET url_text='URL change test' WHERE link_id=1 and link_type=3;
 -- 2 U content : 1
-UPDATE `xt_media_description` set media_description='Image_description_test' WHERE id=1;
+UPDATE `xt_media` set file='Image_description_test' WHERE id=1;
 -- 3 U image : 2
 UPDATE `xt_products_to_categories` set categories_id=3 WHERE `products_id`=1;
 -- 4 U product : 1

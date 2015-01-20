@@ -102,8 +102,8 @@ class SyncExecuteCommandTest extends ESDoctrineTestCase
         ],
         'ONGRXtCommerceConnectorBundle:ImageDocument' => [
             [
-                'url' => 'media/images/popup/shuwa.jpg',
-                'title' => 'shuwa.jpg',
+                'url' => 'media/images/popup/Image_description_test',
+                'title' => 'Image_description_test',
             ],
         ],
         'ONGRXtCommerceConnectorBundle:ProductDocument' => [
@@ -140,7 +140,7 @@ class SyncExecuteCommandTest extends ESDoctrineTestCase
                 'categories' => [
                     0 => [
                         'is_active' => 1,
-                        'title' => 'Categorie 1',
+                        'title' => 'Altered category',
                         'left' => 1,
                         'right' => 2,
                     ],

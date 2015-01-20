@@ -1,4 +1,13 @@
 services:
+
+    ongr_connections.sync.extractor.doctrine_extractor:
+        class: %ongr_connections.extractor.doctrine_extractor.class%
+        calls:
+            - [ setRelationsCollection, [ @ongr_connections.sync.relations_collection ] ]
+            - [ setConnection, [ @database_connection ] ]
+            - [ setStorageFacility, [ @ongr_connections.sync.sync_storage ] ]
+            - [ setContainer, [ @service_container ] ]
+
     #Full import event listeners.
     test.import.source.category:
            class: %ongr_xt_commerce_connector.importsource.class%
