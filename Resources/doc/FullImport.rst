@@ -3,12 +3,23 @@ Full import functionality and configuration
 
 XtCommerceConnectorBundle uses ConnectionsBundle pipeline functionality for full import of data from xtCommerce database.
 
-Three events are defined and used by the full import functionality:
+Four events are defined and used by the full import functionality:
     - Source
     - Modifier
     - Consume
     - Finish
 
+Pipeline data flow
+------------------
+
+    - Source
+        Provides data from the database.
+    - Modifier
+        Assigns data from the database to the relevant fields in Elasticsearch document.
+    - Consume
+        Prepares document for persistence in Elasticsearch.
+    - Finish
+        Commits documents to Elasticsearch.
 
 Source event
 ------------
@@ -56,13 +67,16 @@ Example query defined in queries.xml:
         </parameter>
 
 
-Please note the parameters `:lang_id` and `:store_id`. These parameters are configured in service as shopId and langId.
+Please note the parameters ``:lang_id`` and ``:store_id``. These parameters are configured in service as shopId and langId.
+
 Parameters may be overriden by defining defaultBindings in the service definition.
+
 
 Example service configuration:
 
-.. code-block:: yml
+.. code-block:: yaml
 
+    # Source service definition:
     ongr_xt_commerce_connector.import.source.product:
            class: %ongr_xt_commerce_connector.importsource.class%
            parent: ongr_connections.import.source
@@ -78,11 +92,37 @@ Example service configuration:
            tags:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource } # Register service as listener.
 
+    # Modifier definition:
+    ongr_xt_commerce_connector.import.sync.modifier:
+        class: %ongr_connections.import.modifier.class%
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.modify, method: onModify }
+
+    #Consumer definition:
+    ongr_xt_commerce_connector.import.consumer:
+        class: %ongr_connections.import.consumer.class%
+        parent: ongr_connections.import.consumer
+        arguments:
+            - @es.manager
+            - ONGR\ConnectionsBundle\Pipeline\Item\ImportItem
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.consume, method: onConsume }
+
+    # Finish definition:
+    ongr_xt_commerce_connector.import.sync.finish:
+        class: %ongr_connections.import.finish.class%
+        parent: ongr_connections.import.finish
+        arguments:
+            - @es.manager
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.finish, method: onFinish }
+
+
 
 Please note that product needs to have full information on (multiple) images and categories, so our source would need to execute a separate query (queries) for each product.
 These subqueries are defined as services, e.g.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     ongr_xt_commerce_connector.image_subquery:
         class: %ongr_xt_commerce_connector.subquery.class%
@@ -94,6 +134,7 @@ These subqueries are defined as services, e.g.
             - ONGR\XtCommerceConnectorBundle\Document\ImageObject   # Document to return, defined in Document/ .
             - %subquery.images%                                     # The SQL sub-query itself.
             - { product_id: %importSubQuery.parent_id.value% }      # SQL sub-query parameters. In this particular case we have referred to a constant defined in constants.xml.
+
 
 
 Refer to `Subqueries <subqueries.rst>`_ for more information about subquery usage.
