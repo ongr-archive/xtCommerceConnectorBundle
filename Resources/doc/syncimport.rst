@@ -154,7 +154,7 @@ Example service configurations:
 
 
 Please note that product needs to have full information on (multiple) images and categories, so our source would need to execute a separate query (queries) for each product.
-These subqueries are defined as services, e.g.
+These subqueries are defined as services, e.g.:
 
 .. code-block:: yaml
 
