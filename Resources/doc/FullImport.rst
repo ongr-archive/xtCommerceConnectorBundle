@@ -98,7 +98,7 @@ Example service configuration:
         tags:
             - { name: kernel.event_listener, event: ongr.pipeline.import.default.modify, method: onModify }
 
-    #Consumer definition:
+    # Consumer definition:
     ongr_xt_commerce_connector.import.consumer:
         class: %ongr_connections.import.consumer.class%
         parent: ongr_connections.import.consumer
@@ -120,7 +120,7 @@ Example service configuration:
 
 
 Please note that product needs to have full information on (multiple) images and categories, so our source would need to execute a separate query (queries) for each product.
-These subqueries are defined as services, e.g.
+These subqueries are defined as services, e.g.:
 
 .. code-block:: yaml
 

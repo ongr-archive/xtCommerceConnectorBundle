@@ -18,7 +18,8 @@ Your source returns something akin to this from the database:
     }
 
 
-NB: We will refer to this object as the "parent".
+Note:
+    We will refer to this object as the "parent".
 
 Suppose our end-document should have a structure akin to this:
 
@@ -54,7 +55,7 @@ First of all, we define SQL queries for images and some_entities:
     WHERE product_table.id = :product_id
 
 
-This one's for images. Let's say that we have put it in a symfony xml configuration file as a parameter called ``image.subquery``
+This one's for images. Let's say that we have put it in a symfony xml configuration file as a parameter called ``image.subquery``.
 
 .. code-block:: sql
 
@@ -64,7 +65,7 @@ This one's for images. Let's say that we have put it in a symfony xml configurat
     WHERE id = :entity_id
 
 
-This one's for some (mysterious) entities. Let's say we have put it in the same xml configuration file as a parameter called ``entity.subquery``
+This one's for some (mysterious) entities. Let's say we have put it in the same xml configuration file as a parameter called ``entity.subquery``.
 
 
 Configuring subquery services
@@ -132,7 +133,7 @@ This is seriously suboptimal, since you run queries for each and every child id 
 
 
 Now the third line from the end is different. As you have probably already guessed, ``ImportSubQuery.just_explode.value`` is another constant, this time used instead of a query.
-It tells the subquery mechanism not to run any queries against the database, but instead just explode the input
+It tells the subquery mechanism not to run any queries against the database, but instead just explode the input.
 
 Configuring source to use subqueries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

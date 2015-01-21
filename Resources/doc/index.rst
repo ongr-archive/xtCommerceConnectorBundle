@@ -1,7 +1,7 @@
 xt Commerce Connector
 =====================
 
-Bundle handles integration of xt:Commerce e-shop database, and supports
+Bundle handles integration of xt:Commerce e-shop database, and supports:
 
 - Full (initial) import of:
     - Categories

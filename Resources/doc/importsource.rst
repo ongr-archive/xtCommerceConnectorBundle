@@ -20,4 +20,4 @@ It is configured as follows:
                - %default_lang_id%                  # Language id.
                - [ ]                                # Optional overriding sql parameters.
 
-Remember to register your ImportSource service as a pipeline source event listener!
+Remember to register your ImportSource service as a pipeline source event listener! See Pipeline chapter in ConnectionsBundle documentation for more information.
