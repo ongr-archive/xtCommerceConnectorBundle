@@ -218,7 +218,7 @@ class SyncExecuteCommandTest extends ESDoctrineTestCase
         $commandTester->execute(
             [
                 'command' => $command->getName(),
-                'target' => 'some-target',
+                'target' => 'default',
             ]
         );
 

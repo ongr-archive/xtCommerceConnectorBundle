@@ -11,7 +11,6 @@ parameters:
     default_shop_id: 1
     default_lang_id: en
 
-
 services:
     # Full import event listeners.
     ongr_xt_commerce_connector.import.source.category:
@@ -71,7 +70,6 @@ services:
                - %default_lang_id%
            tags:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
-
 
     ongr_xt_commerce_connector.import.modifier:
         class: %ongr_connections.import.modifier.class%
@@ -232,7 +230,6 @@ services:
             - @es.manager
         tags:
             - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.finish, method: onFinish }
-
 
     # Subqueries.
     ongr_xt_commerce_connector.image_subquery:

@@ -19,7 +19,7 @@ use ONGR\ConnectionsBundle\Sync\SyncStorage\SyncStorage;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 
 /**
- * This consumer cleans up after syncing. It is a good consumer.
+ * This consumer cleans up after syncing.
  */
 class ImportSyncConsumer extends AbstractConsumeEventListener
 {
@@ -54,25 +54,26 @@ class ImportSyncConsumer extends AbstractConsumeEventListener
     {
         /** @var ImportItem $importItem */
         $importItem = $event->getItem();
-        if ($importItem instanceof ImportItem) {
-            $data = $importItem->getEntity();
-            if ($importItem->getDocument()->getId()) {
-                $this->manager->persist($importItem->getDocument());
-            }
-            if (is_array($data) && array_key_exists('sync_id', $data)) {
-                $this->syncStorage->deleteItem(
-                    $data['sync_id'],
-                    [$this->syncStorageData['shop_id']]
-                );
-            } else {
-                $this->log('Item data does not contain sync_id field.', 'notice');
-
-                return;
-            }
-        } else {
+        if (!$importItem instanceof ImportItem) {
             $this->log('Unexpected content: expected ImportItem, got ' . get_class($importItem) . '.', 'notice');
 
             return;
         }
+
+        $data = $importItem->getEntity();
+        if ($importItem->getDocument()->getId()) {
+            $this->manager->persist($importItem->getDocument());
+        }
+
+        if (!array_key_exists('sync_id', $data)) {
+            $this->log('Item data does not contain sync_id field.', 'notice');
+
+            return;
+        }
+
+        $this->syncStorage->deleteItem(
+            $data['sync_id'],
+            [$this->syncStorageData['shop_id']]
+        );
     }
 }

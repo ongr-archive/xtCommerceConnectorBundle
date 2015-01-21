@@ -4,14 +4,14 @@ services:
         arguments:
             - @ongr_connections.sync.diff_provider.binlog_diff_provider
         tags:
-            - { name: kernel.event_listener, event: ongr.pipeline.data_sync.some-target.source, method: onSource }
+            - { name: kernel.event_listener, event: ongr.pipeline.data_sync.default.source, method: onSource }
 
     ongr_xt_commerce.sync.data_sync.consume:
         class: %ongr_connections.sync.data_sync.consume.class%
         arguments:
             - @ongr_connections.sync.extractor.doctrine_extractor
         tags:
-            - { name: kernel.event_listener, event: ongr.pipeline.data_sync.some-target.consume, method: onConsume }
+            - { name: kernel.event_listener, event: ongr.pipeline.data_sync.default.consume, method: onConsume }
 
     # RELATIONS FOR CATEGORIES
     ongr_xt_commerce.sql_relations.category.delete:
