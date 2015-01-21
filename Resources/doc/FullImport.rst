@@ -18,6 +18,7 @@ Source event populates the pipeline sources with data. It uses queries defined i
 Example query defined in queries.xml:
 
 .. code-block:: xml
+
          <parameter key="query.products">
             <![CDATA[
             SELECT
@@ -33,7 +34,7 @@ Example query defined in queries.xml:
             GROUP_CONCAT(DISTINCT seo.url_text SEPARATOR '|') as seo_urls,
             products_store_id,
             GROUP_CONCAT(DISTINCT prod_cat.categories_id SEPARATOR '|') as categories,
-            CONCAT(COALESCE(prod.products_image,''),'|', GROUP_CONCAT(DISTINCT images.file SEPARATOR '|')) as images
+            CONCAT(COALESCE(prod.products_image,''),'|' , GROUP_CONCAT(DISTINCT images.file SEPARATOR '|')) as images
 
             FROM xt_products as products
 
@@ -54,12 +55,14 @@ Example query defined in queries.xml:
             ]]>
         </parameter>
 
+
 Please note the parameters `:lang_id` and `:store_id`. These parameters are configured in service as shopId and langId.
 Parameters may be overriden by defining defaultBindings in the service definition.
 
 Example service configuration:
 
 .. code-block:: yml
+
     ongr_xt_commerce_connector.import.source.product:
            class: %ongr_xt_commerce_connector.importsource.class%
            parent: ongr_connections.import.source
@@ -75,10 +78,12 @@ Example service configuration:
            tags:
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource } # Register service as listener.
 
+
 Please note that product needs to have full information on (multiple) images and categories, so our source would need to execute a separate query (queries) for each product.
 These subqueries are defined as services, e.g.
 
 .. code-block:: yml
+
     ongr_xt_commerce_connector.image_subquery:
         class: %ongr_xt_commerce_connector.subquery.class%
         arguments:
@@ -88,4 +93,7 @@ These subqueries are defined as services, e.g.
             - images                                                # Parents' field into which the subquery result should be put.
             - ONGR\XtCommerceConnectorBundle\Document\ImageObject   # Document to return, defined in Document/ .
             - %subquery.images%                                     # The SQL sub-query itself.
-            - { product_id: %importSubQuery.parent_id.value% }      # SQL sub-query parameters. In this particular case we have a constant defined in constants.xml.
+            - { product_id: %importSubQuery.parent_id.value% }      # SQL sub-query parameters. In this particular case we have referred to a constant defined in constants.xml.
+
+
+Refer to `Subqueries <subqueries.rst>`_ for more information about subquery usage.
