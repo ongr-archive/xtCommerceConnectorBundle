@@ -28,3 +28,4 @@ ongr_elasticsearch:
             connection: default
             mappings:
                 - ONGRXtCommerceConnectorBundle
+                - ONGRConnectionsBundle

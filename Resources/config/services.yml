@@ -1,0 +1,266 @@
+imports:
+    - { resource: relations.yml }
+    - { resource: injection.yml }
+
+parameters:
+    ongr_connections.import.modifier.class: ONGR\XtCommerceConnectorBundle\Modifier\ImportModifier
+    ongr_connections.import.consumer.class: ONGR\XtCommerceConnectorBundle\Consumer\ImportConsumer
+    ongr_xt_commerce_connector.subquery.class: ONGR\XtCommerceConnectorBundle\Import\ImportSubQuery
+    ongr_xt_commerce_connector.importsource.class: ONGR\XtCommerceConnectorBundle\Source\ImportSource
+    ongr_xt_commerce_connector.deletesource.class: ONGR\XtCommerceConnectorBundle\Source\DeleteSource
+    default_shop_id: 1
+    default_lang_id: en
+
+services:
+    # Full import event listeners.
+    ongr_xt_commerce_connector.import.source.category:
+           class: %ongr_xt_commerce_connector.importsource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.categories%
+               - ONGRXtCommerceConnectorBundle:CategoryDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.image:
+           class: %ongr_xt_commerce_connector.importsource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.images%
+               - ONGRXtCommerceConnectorBundle:ImageDocument
+               - %default_shop_id%
+               - %default_lang_id%
+               - { lang_id: %default_lang_id% }
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.content:
+           class: %ongr_xt_commerce_connector.importsource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.content%
+               - ONGRXtCommerceConnectorBundle:ContentDocument
+               - %default_shop_id%
+               - %default_lang_id%
+               - { lang_id: %default_lang_id% }
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.product:
+           class: %ongr_xt_commerce_connector.importsource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - [@ongr_xt_commerce_connector.image_subquery, @ongr_xt_commerce_connector.category_subquery, @ongr_xt_commerce_connector.slug_subquery]
+               - %query.products%
+               - ONGRXtCommerceConnectorBundle:ProductDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.modifier:
+        class: %ongr_connections.import.modifier.class%
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.modify, method: onModify }
+
+    ongr_xt_commerce_connector.import.consumer:
+        class: %ongr_connections.import.consumer.class%
+        parent: ongr_connections.import.consumer
+        arguments:
+            - @es.manager
+            - ONGR\ConnectionsBundle\Pipeline\Item\ImportItem
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.consume, method: onConsume }
+
+    ongr_xt_commerce_connector.import.finish:
+        class: %ongr_connections.import.finish.class%
+        parent: ongr_connections.import.finish
+        arguments:
+            - @es.manager
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.import.default.finish, method: onFinish }
+
+    # Sync event listeners.
+    ongr_xt_commerce_connector.import.source.category.sync:
+           class: %ongr_xt_commerce_connector.importsource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.categories.sync.c_u%
+               - ONGRXtCommerceConnectorBundle:CategoryDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.category.sync.del:
+           class: %ongr_xt_commerce_connector.deletesource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.categories.sync.d%
+               - ONGRXtCommerceConnectorBundle:CategoryDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.image.sync:
+           class: %ongr_xt_commerce_connector.importsource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.images.sync.c_u%
+               - ONGRXtCommerceConnectorBundle:ImageDocument
+               - %default_shop_id%
+               - %default_lang_id%
+               - { lang_id: %default_lang_id% }
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.image.sync.delete:
+           class: %ongr_xt_commerce_connector.deletesource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.images.sync.d%
+               - ONGRXtCommerceConnectorBundle:ImageDocument
+               - %default_shop_id%
+               - %default_lang_id%
+               - { lang_id: %default_lang_id% }
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.content.sync:
+           class: %ongr_xt_commerce_connector.importsource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.content.sync.c_u%
+               - ONGRXtCommerceConnectorBundle:ContentDocument
+               - %default_shop_id%
+               - %default_lang_id%
+               - { lang_id: %default_lang_id% }
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.content.sync.delete:
+           class: %ongr_xt_commerce_connector.deletesource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - []
+               - %query.content.sync.d%
+               - ONGRXtCommerceConnectorBundle:ContentDocument
+               - %default_shop_id%
+               - %default_lang_id%
+               - { lang_id: %default_lang_id% }
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.product.sync:
+           class: %ongr_xt_commerce_connector.importsource.class%
+           parent: ongr_connections.import.source
+           arguments:
+               - @doctrine.dbal.default_connection
+               - @es.manager
+               - [ @ongr_xt_commerce_connector.image_subquery, @ongr_xt_commerce_connector.category_subquery, @ongr_xt_commerce_connector.slug_subquery ]
+               - %query.products.sync.c_u%
+               - ONGRXtCommerceConnectorBundle:ProductDocument
+               - %default_shop_id%
+               - %default_lang_id%
+           tags:
+               - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.source.product.sync.delete:
+        class: %ongr_xt_commerce_connector.deletesource.class%
+        parent: ongr_connections.import.source
+        arguments:
+            - @doctrine.dbal.default_connection
+            - @es.manager
+            - []
+            - %query.products.sync.d%
+            - ONGRXtCommerceConnectorBundle:ProductDocument
+            - %default_shop_id%
+            - %default_lang_id%
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.source, method: onSource }
+
+    ongr_xt_commerce_connector.import.sync.consumer:
+        class:  ONGR\XtCommerceConnectorBundle\Consumer\ImportSyncConsumer
+        arguments:
+            - @es.manager
+            - @ongr_connections.sync.sync_storage
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.consume, method: onConsume }
+
+    ongr_xt_commerce_connector.import.sync.modifier:
+        class: %ongr_connections.import.modifier.class%
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.modify, method: onModify }
+
+    ongr_xt_commerce_connector.import.sync.finish:
+        class: %ongr_connections.import.finish.class%
+        parent: ongr_connections.import.finish
+        arguments:
+            - @es.manager
+        tags:
+            - { name: kernel.event_listener, event: ongr.pipeline.sync.execute.default.finish, method: onFinish }
+
+    # Subqueries.
+    ongr_xt_commerce_connector.image_subquery:
+        class: %ongr_xt_commerce_connector.subquery.class%
+        arguments:
+            - @doctrine.dbal.default_connection
+            - id
+            - null
+            - images
+            - ONGR\XtCommerceConnectorBundle\Document\ImageObject
+            - %subquery.images%
+            - { product_id: %importSubQuery.parent_id.value%, lang_id: %default_lang_id% }
+
+    ongr_xt_commerce_connector.category_subquery:
+        class: %ongr_xt_commerce_connector.subquery.class%
+        arguments:
+            - @doctrine.dbal.default_connection
+            - id
+            - null
+            - categories
+            - ONGR\XtCommerceConnectorBundle\Document\CategoryObject
+            - %subquery.categories%
+            - { id: %importSubQuery.parent_id.value%, store_id: %default_shop_id%, lang_id: %default_lang_id% }
+
+    ongr_xt_commerce_connector.slug_subquery:
+        class: %ongr_xt_commerce_connector.subquery.class%
+        arguments:
+            - @doctrine.dbal.default_connection
+            - id
+            - seo_urls
+            - slugs
+            - null
+            - %importSubQuery.just_explode.value%
+            - []

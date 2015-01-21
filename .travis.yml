@@ -7,6 +7,13 @@ env:
   - SYMFONY="2.6.*"
 services:
   - elasticsearch
+before_install:
+  # SQL settings
+  - sudo chmod 0644 /etc/mysql/my.cnf
+  - sudo sed "/skip-external-locking/a log-bin=mysql-bin\nbinlog_format = ROW\ndatadir = /var/lib/mysql" -i /etc/mysql/my.cnf
+  - sudo usermod -g travis mysql
+  - sudo chmod -R 0777 /var/lib/mysql
+  - sudo service mysql restart
 install:
   - sudo pip install -q sphinx --use-mirrors
   - wget -q -O conf.py https://raw.githubusercontent.com/ongr-io/ongr-handbook/master/source/conf-travis.py
@@ -15,7 +22,7 @@ install:
 before_script:
   - composer self-update
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('root') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
-  - composer update --prefer-dist
+  - composer update --prefer-source
 script:
   - vendor/bin/phpunit --coverage-text
   - vendor/bin/phpcs -p --standard=$TRAVIS_BUILD_DIR/vendor/ongr/ongr-strict-standard/ONGR --ignore=vendor/,Tests/app/,Resources/public/,_build/,_static/ ./

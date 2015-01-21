@@ -23,7 +23,7 @@ class ImportIterator extends \IteratorIterator
     /**
      * @var Repository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @var ImportSubQuery[] Queries for sub-objects.

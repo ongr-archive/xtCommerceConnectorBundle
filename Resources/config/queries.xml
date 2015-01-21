@@ -25,6 +25,38 @@
             GROUP BY descr.language_code, cat.categories_id, descr.categories_store_id
             ]]>
         </parameter>
+        <parameter key="query.categories.sync.c_u">
+            <![CDATA[
+            SELECT
+                sync.id as sync_id,
+                cat.categories_id as id,
+                cat.sort_order as sort,
+                cat.categories_status as active,
+                cat.parent_id as parentId,
+                descr.categories_name as title,
+                cat.categories_left as `left`,
+                cat.categories_right as `right`
+
+            FROM ongr_sync_storage as sync
+
+            INNER JOIN xt_categories as cat ON cat.categories_id = sync.document_id AND sync.document_type='category' AND (sync.`type`='C' OR sync.`type`='U')
+
+            LEFT JOIN xt_categories_description as descr ON cat.categories_id = descr.categories_id
+
+            WHERE descr.categories_store_id = :store_id AND descr.language_code = :lang_id
+
+            GROUP BY descr.language_code, cat.categories_id, descr.categories_store_id
+            ]]>
+        </parameter>
+        <parameter key="query.categories.sync.d">
+            <![CDATA[
+            SELECT
+            sync.id as sync_id,
+            sync.document_id as id
+
+            FROM ongr_sync_storage as sync WHERE sync.document_type='category' AND sync.`type`='D'
+            ]]>
+        </parameter>
         <parameter key="query.content">
             <![CDATA[
             SELECT
@@ -43,6 +75,36 @@
             GROUP BY content.language_code, content_id
             ]]>
         </parameter>
+        <parameter key="query.content.sync.c_u">
+            <![CDATA[
+            SELECT
+              sync.id as sync_id,
+              content_id as id,
+              content.language_code,
+              content_title as title,
+              content_body as content,
+              seo.url_text as slug
+
+            FROM ongr_sync_storage as sync
+
+            INNER JOIN xt_content_elements as content ON content.content_id = sync.document_id AND sync.document_type='content' AND (sync.`type`='C' OR sync.`type`='U')
+
+            left join xt_seo_url as seo ON content.language_code = seo.language_code AND content.content_id = seo.link_id AND link_type=3
+
+            WHERE content.language_code = :lang_id
+
+            GROUP BY content.language_code, content_id
+            ]]>
+        </parameter>
+        <parameter key="query.content.sync.d">
+            <![CDATA[
+            SELECT
+            sync.id as sync_id,
+            sync.document_id as id
+
+            FROM ongr_sync_storage as sync WHERE sync.document_type='content' AND sync.`type`='D'
+            ]]>
+        </parameter>
         <parameter key="query.images">
             <![CDATA[
             SELECT
@@ -59,6 +121,36 @@
             WHERE descr.language_code = :lang_id
 
             GROUP BY descr.language_code, image.id
+            ]]>
+        </parameter>
+        <parameter key="query.images.sync.c_u">
+            <![CDATA[
+            SELECT
+            sync.id as sync_id,
+            image.id as id,
+            CONCAT ('media/images/popup/',image.file) as url,
+            image.file as title,
+            descr.media_description,
+            descr.language_code
+
+            FROM ongr_sync_storage as sync
+
+            INNER JOIN xt_media as image ON image.id=sync.document_id AND sync.document_type='image' AND (sync.`type`='C' OR sync.`type`='U')
+
+            LEFT JOIN xt_media_description descr ON image.id = descr.id
+
+            WHERE descr.language_code = :lang_id
+
+            GROUP BY descr.language_code, image.id
+            ]]>
+        </parameter>
+        <parameter key="query.images.sync.d">
+            <![CDATA[
+            SELECT
+            sync.id as sync_id,
+            sync.document_id as id
+
+            FROM ongr_sync_storage as sync WHERE sync.document_type='image' AND sync.`type`='D'
             ]]>
         </parameter>
         <parameter key="query.products">
@@ -93,6 +185,52 @@
 
             Group by de.language_code, prod.products_id, products_store_id
 
+            ]]>
+        </parameter>
+        <parameter key="query.products.sync.c_u">
+            <![CDATA[
+            SELECT
+            sync.id as sync_id,
+            prod.products_id as id,
+            products_name as title,
+            products_short_description as description,
+            products_description as description,
+            products_ean as sku,
+            products_price as price,
+            de.language_code as lang_id,
+            products_url,
+            GROUP_CONCAT(DISTINCT seo.url_text SEPARATOR '|') as seo_urls,
+            products_store_id,
+            GROUP_CONCAT(DISTINCT prod_cat.categories_id SEPARATOR '|') as categories,
+            CONCAT(COALESCE(prod.products_image,''),'|', GROUP_CONCAT(DISTINCT images.file SEPARATOR '|')) as images
+
+            FROM ongr_sync_storage as sync
+
+            INNER JOIN xt_products as prod ON prod.products_id=sync.document_id AND sync.document_type='product' AND (sync.`type`='C' OR sync.`type`='U')
+
+            LEFT JOIN xt_products_to_categories as prod_cat ON prod.products_id = prod_cat.products_id
+
+            LEFT JOIN xt_media_link as medialink ON prod.products_id = medialink.link_id AND medialink.type = 'images'
+
+            LEFT JOIN xt_media as images ON medialink.m_id = images.id
+
+            LEFT JOIN xt_products_description as de ON prod.products_id = de.products_id
+
+            LEFT JOIN xt_seo_url as seo ON seo.link_id = prod.products_id AND link_type=1 AND seo.language_code = de.language_code
+
+            WHERE de.language_code = :lang_id AND products_store_id = :store_id
+
+            Group by de.language_code, prod.products_id, products_store_id
+
+            ]]>
+        </parameter>
+        <parameter key="query.products.sync.d">
+            <![CDATA[
+            SELECT
+            sync.id as sync_id,
+            sync.document_id as id
+
+            FROM ongr_sync_storage as sync WHERE sync.document_type='product' AND sync.`type`='D'
             ]]>
         </parameter>
         <parameter key="subquery.categories">
