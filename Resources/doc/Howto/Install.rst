@@ -10,11 +10,10 @@ Prerequisites
     - Installation zip of xt:Commerce.
     - A valid xt:Commerce license.
 
-You can get a license by registering `here <http://addons.xt-commerce.com/index.php?page=content&coID=37>`_.
+You can get a license by registering `here <http://www.xt-commerce.com/>`_.
 
 Please note that while you get a download link with your license file, the link provided in the email is not pointing
-to the most recent (and supported) version of xt:Commerce. You will have to download it from
-`here <http://www.xt-commerce.info/index.php?_m=downloads&_a=view&parentcategoryid=7&pcid=5&nav=0,5>`_.
+to the most recent (and supported) version of xt:Commerce. So don't press "Download" button too hastily, check if there are links to a newer version.
 
 Installation
 ------------
