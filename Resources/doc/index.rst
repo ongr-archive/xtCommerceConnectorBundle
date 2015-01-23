@@ -22,5 +22,8 @@ Contents:
     :titlesonly:
     :glob:
 
-    *
+    Howto/index
+    Howto/Install
+
+    Internals/*
 

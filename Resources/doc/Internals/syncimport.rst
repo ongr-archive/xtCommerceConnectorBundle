@@ -171,4 +171,4 @@ These subqueries are defined as services, e.g.:
 
 
 
-Refer to `Subqueries <subqueries.rst>`_ for more information about subquery usage.
+Refer to `Subqueries <Internals/subqueries.rst>`_ for more information about subquery usage.
