@@ -18,7 +18,7 @@ to the most recent (and supported) version of xt:Commerce. So don't press "Downl
 Installation
 ------------
 
-There are two ways of using installation script located in this bundles' Install folder.
+There are two ways of using installation script located in this bundles' Install folder. Method 2 is preferred.
 
 Method 1:
 ~~~~~~~~~
@@ -32,11 +32,13 @@ Running installation script interactively by pressing ``I`` when presented with 
 Method 2:
 ~~~~~~~~~
 
-Configuring installation script in your favourite editor. Just open up Install/install.sh and change the values of the variables below
+Configuring installation script in your favourite editor. Just open up ``Install/install.sh`` and change the values of the variables below
 ``# CONFIGURE DEFAULT VALUES HERE`` comment.
 
-Choices you might have to make
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Choices you might have to make during the installation process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are some choices you might have to make regardless of the installation method you chose:
 
 If previous installation failed and was aborted, during unzipping step you might be asked whether you want to overwrite files. Any choice is good, although choosing ``[N]one`` makes unzipping much faster.
 
@@ -75,8 +77,8 @@ Troubleshooting
 - "Failed: Creating database" - after you chose to drop and recreate target database
     - Does the user you provided have CREATE DATABASE privilege?
 - "Failed: Moving to installation directory"
-    - Check if you have write permissions on the installation destination directory. Sudo ./install.sh if necessary.
+    - Check if you have write permissions on the installation destination directory. ``sudo ./install.sh`` if necessary.
 - "Failed: Removing temporary files"
     - This should never happen. If it did, check if Install/package/extracted write permissions didn't somehow change.
 - "Failed: Removing installation directories xtInstaller / xtUpdater / xtWizard"
-    - Check if you have write permissions on the installation destination directory. Sudo ./install.sh if necessary.
+    - Check if you have write permissions on the installation destination directory. ``sudo ./install.sh`` if necessary.
