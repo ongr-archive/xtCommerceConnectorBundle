@@ -7,7 +7,7 @@
 # CONFIGURE DEFAULT VALUES HERE
 
 SOURCE_ZIP_LOCATION="package/xtcommerce.zip"
-LICENCE_LOCATION="package/license.txt"
+LICENSE_LOCATION="package/license.txt"
 INSTALLATION_LOCATION="/var/www/xtCommerce"
 
 MYSQL_SERVER="localhost"
@@ -40,10 +40,10 @@ function interactive_setup
         SOURCE_ZIP_LOCATION=$IN
     fi
 
-    read -r -p "Licence file location [$LICENCE_LOCATION]:" IN
+    read -r -p "License file location [$LICENSE_LOCATION]:" IN
     if [[ $IN -ne "" ]]
     then
-        LICENCE_LOCATION=$IN
+        LICENSE_LOCATION=$IN
     fi
 
     read -r -p "Install to location [$INSTALLATION_LOCATION]:" IN
@@ -129,8 +129,8 @@ function do_install
     cp -R package/skel/conf/* $dir/conf/
     check_outcome "Copying config skeleton"
 
-    cp $LICENCE_LOCATION $dir/lic/
-    check_outcome "Copying licence"
+    cp $LICENSE_LOCATION $dir/lic/
+    check_outcome "Copying license"
 
     cat package/skel/conf/config.php | sed -e "s/{{INSTALL_MYSQL_HOST}}/$MYSQL_SERVER/g" | sed -e "s/{{INSTALL_MYSQL_USER}}/$MYSQL_USERNAME/g" \
     | sed -e "s/{{INSTALL_MYSQL_PASSWORD}}/$MYSQL_PASSWORD/g" | sed -e "s/{{INSTALL_MYSQL_DATABASE}}/$MYSQL_DATABASE/g" \

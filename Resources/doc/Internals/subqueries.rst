@@ -157,4 +157,4 @@ The last step left is to configure your source to use the subqueries defined. Th
                - { name: kernel.event_listener, event: ongr.pipeline.import.default.source, method: onSource } # Register this service as pipeline source event listener
 
 
-Refer to `ImportSource <importsource.rst>`_ for more information about ImportSource usage.
+Refer to `ImportSource <Internals/importsource.rst>`_ for more information about ImportSource usage.
