@@ -10,11 +10,11 @@ Prerequisites
     - Installation zip of xt:Commerce.
     - A valid xt:Commerce license.
 
-You can get a license by registering here: http://addons.xt-commerce.com/index.php?page=content&coID=37
+You can get a license by registering `here <http://addons.xt-commerce.com/index.php?page=content&coID=37>`_.
 
 Please note that while you get a download link with your license file, the link provided in the email is not pointing
-to the most recent (and supported) version of xt:Commerce. You will have to download it from here:
-http://www.xt-commerce.info/index.php?_m=downloads&_a=view&parentcategoryid=7&pcid=5&nav=0,5
+to the most recent (and supported) version of xt:Commerce. You will have to download it from
+`here <http://www.xt-commerce.info/index.php?_m=downloads&_a=view&parentcategoryid=7&pcid=5&nav=0,5>`_.
 
 Installation
 ------------
@@ -24,13 +24,7 @@ There are two ways of using installation script located in this bundles' Install
 Method 1:
 ~~~~~~~~~
 
-Running installation script interactively:
-
-::
-
-    ./install.sh interactive
-
-or by pressing ``I`` when presented with a prompt
+Running installation script interactively by pressing ``I`` when presented with a prompt:
 
 ::
 
@@ -40,7 +34,7 @@ Method 2:
 ~~~~~~~~~
 
 Configuring installation script in your favourite editor. Just open up Install/install.sh and change the values of the variables below
-`` # CONFIGURE DEFAULT VALUES HERE `` comment.
+``# CONFIGURE DEFAULT VALUES HERE`` comment.
 
 Choices you might have to make
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
