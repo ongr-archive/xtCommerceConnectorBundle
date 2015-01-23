@@ -1,8 +1,8 @@
 Semiautomated xt:Commerce installation
 ======================================
 
-This bundle provides a shell script to quickly and easily install demo version of xt:Commerce.
-It installs xt:Commerce to the directory of your choice and sets up a default (demo) database in a database of your choice.
+This bundle provides a shell script to quickly and easily install a demo version of xt:Commerce.
+It installs xt:Commerce to the directory of your choice and sets up a default (demo) data in a database of your choice.
 
 Prerequisites
 -------------
@@ -51,7 +51,7 @@ If destination directory already exists, you will be asked to choose between the
 
 ``Do you want to [D]elete and recreate it, try to [M]ove into it anyway, [S]kip copy of the data (default: [S])``
 
-Moving into a directory with xt:Commerce already installed in it can and will fail. If you are not sure, default value is safest.
+Moving into a directory with xt:Commerce already installed in it can and will fail. If you are not sure, default value is the safest.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
@@ -62,12 +62,12 @@ Troubleshooting
         - Check if there is enough free disk space (~120M) for extracted files.
     - "Failed: Copying config skeleton"
         - Check if ``Install/package/skel/conf`` exists and reinstall bundle if it does not.
-    - "Failed: Copying licence"
+    - "Failed: Copying license"
         - Check if location of xt:Commerce license.txt file is set correctly.
     - "Failed: Mangling config"
-        - This shoudn't happen, ever. Check if Install/package/skel/conf/config.php exists and reinstall bundle if it does not.
+        - This shouldn't happen, ever. Check if Install/package/skel/conf/config.php exists and reinstall the bundle if it does not.
     - "Failed: Creating database..."
-        - The target database does not exist and script has failed creating it. Check if mysql username and password are correct.
+        - The target database does not exist and the script has failed creating it. Check if mysql username and password are correct.
         - Check if mysql user you provided has CREATE DATABASE privilege.
         - Create the database yourself.
     - "Failed: Dropping database"
@@ -76,8 +76,8 @@ Troubleshooting
     - "Failed: Creating database" - after you chose to drop and recreate target database
         - Does the user you provided have CREATE DATABASE privilege?
     - "Failed: Moving to installation directory"
-        - Check if you have write permissions on installation destination directory. Sudo ./install.sh if necessary.
+        - Check if you have write permissions on the installation destination directory. Sudo ./install.sh if necessary.
     - "Failed: Removing temporary files"
-        - This shoud never happen. If it did, check if Install/package/extracted write permissions didn't somehow change.
+        - This should never happen. If it did, check if Install/package/extracted write permissions didn't somehow change.
     - "Failed: Removing installation directories xtInstaller / xtUpdater / xtWizard"
-        - Check if you have write permissions on installation destination directory. Sudo ./install.sh if necessary.
+        - Check if you have write permissions on the installation destination directory. Sudo ./install.sh if necessary.

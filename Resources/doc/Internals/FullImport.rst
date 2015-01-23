@@ -69,7 +69,7 @@ Example query defined in queries.xml:
 
 Please note the parameters ``:lang_id`` and ``:store_id``. These parameters are configured in service as shopId and langId.
 
-Parameters may be overriden by defining defaultBindings in the service definition.
+Parameters may be overridden by defining defaultBindings in the service definition.
 
 
 Example service configuration:

@@ -54,10 +54,10 @@ In ``Resources/config/services.yml``
     default_shop_id: 1
     default_lang_id: en
 
-Also note that by default all pipeline events are listening on **default** target.
+Also note that by default all pipeline events are listening on the **default** target.
 If you wish to separate the xt:Commerce imports, e.g. you have different e-Commerce software and would like to import it one-by-one,
-change the event names from ``ongr.pipeline.import.default.``, ``ongr.pipeline.data_sync.default`` and ``ongr.pipeline.data_sync.default`` to
-something more to your taste, e.g. ``ongr.pipeline.import.xtcommerce.``, ``ongr.pipeline.data_sync.xtcommerce`` and ``ongr.pipeline.data_sync.xtcommerce``
+change the event names from ``ongr.pipeline.import.default.``, ``ongr.pipeline.data_sync.default`` and ``ongr.pipeline.sync.execute.default`` to
+something more to your taste, e.g. ``ongr.pipeline.import.xtcommerce.``, ``ongr.pipeline.data_sync.xtcommerce`` and ``ongr.pipeline.sync.execute.xtcommerce``
 in ``Resources/config/services.yml`` and ``Resources/config/relations.yml`` files.
 
 Advanced stuff and further reading
