@@ -11,6 +11,7 @@
 
 namespace ONGR\XtCommerceConnectorBundle\Tests\Unit\Modifier;
 
+use ONGR\ConnectionsBundle\Pipeline\Event\ItemPipelineEvent;
 use ONGR\XtCommerceConnectorBundle\Modifier\ImportModifier;
 
 class ImportModifierTest extends \PHPUnit_Framework_TestCase
@@ -28,7 +29,7 @@ class ImportModifierTest extends \PHPUnit_Framework_TestCase
         $mockItem->expects($this->never())->method('setDocument');
         $mockItem->expects($this->never())->method('getDocument');
 
-        $mod->modify($mockItem);
+        $mod->modify($mockItem, new ItemPipelineEvent(null));
     }
 
     /**
@@ -48,6 +49,6 @@ class ImportModifierTest extends \PHPUnit_Framework_TestCase
         $mockItem->expects($this->once())->method('setDocument');
         $mockItem->expects($this->once())->method('getDocument')->willReturn($mockDocument);
 
-        $mod->modify($mockItem);
+        $mod->modify($mockItem, new ItemPipelineEvent(null));
     }
 }
