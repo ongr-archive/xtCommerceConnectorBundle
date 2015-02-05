@@ -40,18 +40,24 @@ class SyncExecuteCommandTest extends ESDoctrineTestCase
                 'title' => 'Categorie 2',
                 'left' => '3',
                 'right' => '4',
+                'sort' => '0',
+                'parent_id' => '0',
             ],
             [
                 'is_active' => '1',
                 'title' => 'Altered category',
                 'left' => '1',
                 'right' => '2',
+                'sort' => '0',
+                'parent_id' => '0',
             ],
             [
                 'is_active' => '1',
                 'title' => 'New category ENGLISH',
                 'left' => '1',
                 'right' => '2',
+                'sort' => '0',
+                'parent_id' => '0',
             ],
         ],
         'ONGRXtCommerceConnectorBundle:ContentDocument' => [
@@ -115,26 +121,32 @@ class SyncExecuteCommandTest extends ESDoctrineTestCase
                         'title' => 'New category ENGLISH',
                         'left' => '1',
                         'right' => '2',
+                        'sort' => '0',
+                        'parent_id' => '0',
                     ],
                 ],
                 'title' => 'Standardproduct',
                 'description' => 'Standard product with normal pricing',
                 'sku' => 'ean001',
                 'price' => '50.0000',
+                'images' => [],
             ],
             [
                 'categories' => [
                     0 => [
-                        'is_active' => 1,
+                        'is_active' => '1',
                         'title' => 'Altered category',
-                        'left' => 1,
-                        'right' => 2,
+                        'left' => '1',
+                        'right' => '2',
+                        'sort' => '0',
+                        'parent_id' => '0',
                     ],
                 ],
                 'title' => 'Product with special price',
                 'description' => 'product_description_changed',
                 'sku' => 'ean002',
                 'price' => '150.0000',
+                'images' => [],
             ],
             [
                 'categories' => [
@@ -143,12 +155,15 @@ class SyncExecuteCommandTest extends ESDoctrineTestCase
                         'title' => 'Altered category',
                         'left' => 1,
                         'right' => 2,
+                        'sort' => '0',
+                        'parent_id' => '0',
                     ],
                 ],
                 'title' => 'Product with graduated pricing',
                 'description' => 'Standard product with graduated pricing',
                 'sku' => 'ean003',
                 'price' => '50.0000',
+                'images' => [],
             ],
         ],
     ];
@@ -189,7 +204,7 @@ class SyncExecuteCommandTest extends ESDoctrineTestCase
         $this->managerMysql = $this
             ->getServiceContainer()
             ->get('ongr_connections.sync.storage_manager.mysql_storage_manager');
-        $this->managerMysql->createStorage();
+        $this->managerMysql->createStorage(0);
     }
 
     /**

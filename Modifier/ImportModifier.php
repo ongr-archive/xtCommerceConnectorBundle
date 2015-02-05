@@ -12,6 +12,7 @@
 namespace ONGR\XtCommerceConnectorBundle\Modifier;
 
 use ONGR\ConnectionsBundle\EventListener\AbstractImportModifyEventListener;
+use ONGR\ConnectionsBundle\Pipeline\Event\ItemPipelineEvent;
 use ONGR\ConnectionsBundle\Pipeline\Item\AbstractImportItem;
 use ONGR\ConnectionsBundle\Pipeline\Item\ImportItem;
 use ONGR\XtCommerceConnectorBundle\Import\ImportHelper;
@@ -25,8 +26,9 @@ class ImportModifier extends AbstractImportModifyEventListener
      * Maps.
      *
      * @param AbstractImportItem $item
+     * @param ItemPipelineEvent  $event
      */
-    public function modify(AbstractImportItem $item)
+    public function modify(AbstractImportItem $item, ItemPipelineEvent $event)
     {
         if (!$item instanceof ImportItem) {
             return;

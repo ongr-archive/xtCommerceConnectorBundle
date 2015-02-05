@@ -37,7 +37,7 @@
                 cat.categories_left as `left`,
                 cat.categories_right as `right`
 
-            FROM ongr_sync_storage as sync
+            FROM ongr_sync_storage_0 as sync
 
             INNER JOIN xt_categories as cat ON cat.categories_id = sync.document_id AND sync.document_type='category' AND (sync.`type`='C' OR sync.`type`='U')
 
@@ -54,7 +54,7 @@
             sync.id as sync_id,
             sync.document_id as id
 
-            FROM ongr_sync_storage as sync WHERE sync.document_type='category' AND sync.`type`='D'
+            FROM ongr_sync_storage_0 as sync WHERE sync.document_type='category' AND sync.`type`='D'
             ]]>
         </parameter>
         <parameter key="query.content">
@@ -85,7 +85,7 @@
               content_body as content,
               seo.url_text as slug
 
-            FROM ongr_sync_storage as sync
+            FROM ongr_sync_storage_0 as sync
 
             INNER JOIN xt_content_elements as content ON content.content_id = sync.document_id AND sync.document_type='content' AND (sync.`type`='C' OR sync.`type`='U')
 
@@ -102,7 +102,7 @@
             sync.id as sync_id,
             sync.document_id as id
 
-            FROM ongr_sync_storage as sync WHERE sync.document_type='content' AND sync.`type`='D'
+            FROM ongr_sync_storage_0 as sync WHERE sync.document_type='content' AND sync.`type`='D'
             ]]>
         </parameter>
         <parameter key="query.images">
@@ -133,7 +133,7 @@
             descr.media_description,
             descr.language_code
 
-            FROM ongr_sync_storage as sync
+            FROM ongr_sync_storage_0 as sync
 
             INNER JOIN xt_media as image ON image.id=sync.document_id AND sync.document_type='image' AND (sync.`type`='C' OR sync.`type`='U')
 
@@ -150,7 +150,7 @@
             sync.id as sync_id,
             sync.document_id as id
 
-            FROM ongr_sync_storage as sync WHERE sync.document_type='image' AND sync.`type`='D'
+            FROM ongr_sync_storage_0 as sync WHERE sync.document_type='image' AND sync.`type`='D'
             ]]>
         </parameter>
         <parameter key="query.products">
@@ -204,7 +204,7 @@
             GROUP_CONCAT(DISTINCT prod_cat.categories_id SEPARATOR '|') as categories,
             CONCAT(COALESCE(prod.products_image,''),'|', GROUP_CONCAT(DISTINCT images.file SEPARATOR '|')) as images
 
-            FROM ongr_sync_storage as sync
+            FROM ongr_sync_storage_0 as sync
 
             INNER JOIN xt_products as prod ON prod.products_id=sync.document_id AND sync.document_type='product' AND (sync.`type`='C' OR sync.`type`='U')
 
@@ -230,7 +230,7 @@
             sync.id as sync_id,
             sync.document_id as id
 
-            FROM ongr_sync_storage as sync WHERE sync.document_type='product' AND sync.`type`='D'
+            FROM ongr_sync_storage_0 as sync WHERE sync.document_type='product' AND sync.`type`='D'
             ]]>
         </parameter>
         <parameter key="subquery.categories">
