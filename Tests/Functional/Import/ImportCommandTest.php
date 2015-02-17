@@ -12,7 +12,7 @@
 namespace ONGR\XtCommerceConnectorBundle\Tests\Functional\Import;
 
 use ONGR\ConnectionsBundle\Command\ImportFullCommand;
-use ONGR\XtCommerceConnectorBundle\Tests\Functional\AbstractESDoctrineTestCase;
+use ONGR\XtCommerceConnectorBundle\Tests\Functional\AbstractEsDoctrineTestCase;
 use ONGR\ElasticsearchBundle\DSL\Search;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -21,7 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * Functional test for XtCommerce connector.
  */
-class ImportCommandTest extends AbstractESDoctrineTestCase
+class ImportCommandTest extends AbstractEsDoctrineTestCase
 {
     /**
      * @var array Array of expected documents.
