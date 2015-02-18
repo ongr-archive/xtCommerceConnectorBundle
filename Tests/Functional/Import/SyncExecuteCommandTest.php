@@ -20,7 +20,7 @@ use ONGR\ConnectionsBundle\Sync\DiffProvider\Binlog\BinlogParser;
 use ONGR\ConnectionsBundle\Sync\StorageManager\MysqlStorageManager;
 use ONGR\ElasticsearchBundle\DSL\Search;
 use ONGR\ElasticsearchBundle\ORM\Repository;
-use ONGR\XtCommerceConnectorBundle\Tests\Functional\ESDoctrineTestCase;
+use ONGR\XtCommerceConnectorBundle\Tests\Functional\AbstractEsDoctrineTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use \DateTime;
@@ -28,7 +28,7 @@ use \DateTime;
 /**
  * Class SyncExecuteCommandTest - tests for sync.
  */
-class SyncExecuteCommandTest extends ESDoctrineTestCase
+class SyncExecuteCommandTest extends AbstractEsDoctrineTestCase
 {
     /**
      * @var array Array of expected documents.
