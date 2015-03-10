@@ -85,6 +85,6 @@ class ImportIterator extends \IteratorIterator implements \Countable
         }
 
         // Unknown length.
-        return PHP_INT_MAX;
+        return INF;
     }
 }
