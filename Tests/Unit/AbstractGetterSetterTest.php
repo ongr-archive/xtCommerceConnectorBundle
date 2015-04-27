@@ -26,7 +26,7 @@ abstract class AbstractGetterSetterTest extends AbstractEntityTest
      * @param null|string $addMethod
      * @param null|string $removeMethod
      *
-     * @throws \Exception When unknown field type given
+     * @throws \Exception When unknown field type given.
      *
      * @dataProvider getFieldsData()
      */
