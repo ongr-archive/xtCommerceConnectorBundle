@@ -17,6 +17,11 @@ doctrine:
     orm:
         auto_mapping: false
 
+ongr_connections:
+    shops:
+        test: { shop_id: 0 }
+    active_shop: test
+
 ongr_elasticsearch:
     connections:
         default:
