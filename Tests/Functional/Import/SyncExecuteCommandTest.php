@@ -250,6 +250,7 @@ class SyncExecuteCommandTest extends AbstractEsDoctrineTestCase
 
         // Check results.
         $actualDocuments = [];
+        $manager->refresh();
 
         foreach ($this->repositories as $key) {
             $repository = $manager->getRepository($key);

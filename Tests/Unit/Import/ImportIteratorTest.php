@@ -11,6 +11,7 @@
 
 namespace ONGR\XtCommerceConnectorBundle\Tests\Unit\Import;
 
+use ONGR\ConnectionsBundle\Pipeline\Item\ImportItem;
 use ONGR\XtCommerceConnectorBundle\Import\ImportIterator;
 
 class ImportIteratorTest extends \PHPUnit_Framework_TestCase
@@ -62,11 +63,37 @@ class ImportIteratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests behaviour of ImportIterator with ArrayIterator.
+     */
+    public function testImportIteratorCountInfinite()
+    {
+        $iterator = $this->getMockedImportIterator();
+        $this->assertEquals((int)INF, count($iterator));
+        foreach ($iterator as $key => $value) {
+            unset($key, $value);
+        }
+    }
+
+    /**
+     * Tests behaviour of ImportIterator with subqueries present, but no source id data.
+     */
+    public function testImportIteratorCount()
+    {
+        $mockRepository = $this->getMockBuilder('ONGR\ElasticsearchBundle\ORM\Repository')
+            ->disableOriginalConstructor()->getMock();
+        $mockStatement = $this->getMockBuilder('Doctrine\DBAL\Statement')->disableOriginalConstructor()->getMock();
+        $mockStatement->expects($this->any())->method('getIterator')->willReturn(new \ArrayIterator());
+
+        $iterator = new ImportIterator($mockStatement, [], $mockRepository);
+        $this->assertEquals(0, count($iterator));
+    }
+
+    /**
      * Returns new ImportIterator with mocked-up repository.
      *
      * @param mixed $subQueries
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return ImportIterator
      */
     private function getMockedImportIterator($subQueries = [])
     {

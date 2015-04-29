@@ -11,6 +11,7 @@
 
 namespace ONGR\XtCommerceConnectorBundle\Import;
 
+use Doctrine\DBAL\Statement;
 use ONGR\ConnectionsBundle\Pipeline\Item\ImportItem;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use Traversable;
@@ -18,7 +19,7 @@ use Traversable;
 /**
  * This class is able to iterate over entities without storing objects in doctrine memory.
  */
-class ImportIterator extends \IteratorIterator
+class ImportIterator extends \IteratorIterator implements \Countable
 {
     /**
      * @var Repository
@@ -31,6 +32,11 @@ class ImportIterator extends \IteratorIterator
     private $subQueries;
 
     /**
+     * @var Traversable
+     */
+    private $iterator;
+
+    /**
      * @param Traversable      $iterator
      * @param ImportSubQuery[] $subQueries
      * @param Repository       $repository
@@ -39,6 +45,7 @@ class ImportIterator extends \IteratorIterator
     {
         $this->repository = $repository;
         $this->subQueries = $subQueries;
+        $this->iterator = $iterator;
 
         parent::__construct($iterator);
     }
@@ -66,5 +73,18 @@ class ImportIterator extends \IteratorIterator
         }
 
         return new ImportItem($databaseThing, $this->repository->createDocument());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        if ($this->iterator instanceof Statement) {
+            return $this->iterator->rowCount();
+        }
+
+        // Unknown length.
+        return INF;
     }
 }
